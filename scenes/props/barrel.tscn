@@ -1,0 +1,38 @@
+[gd_scene format=3 uid="uid://bsw265i5mglvj"]
+
+[ext_resource type="Texture2D" uid="uid://dprydot7ma28n" path="res://assets/art/props/barrel.png" id="1_i1o76"]
+[ext_resource type="Script" uid="uid://djfg0av421fvg" path="res://scenes/props/barrel.gd" id="1_nhfpi"]
+[ext_resource type="PackedScene" uid="uid://s4gsv3e52ieq" path="res://scenes/colliders/damage_receiver.tscn" id="2_mvosc"]
+
+[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_mvosc"]
+radius = 3.0
+height = 12.0
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_mvosc"]
+size = Vector2(10, 10)
+
+[node name="Barrel" type="StaticBody2D" unique_id=711337127]
+collision_layer = 8
+collision_mask = 0
+script = ExtResource("1_nhfpi")
+knockback_intensity = 50.0
+
+[node name="Sprite2D" type="Sprite2D" parent="." unique_id=163650095]
+texture = ExtResource("1_i1o76")
+centered = false
+offset = Vector2(-16, -32)
+hframes = 2
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=452969124]
+position = Vector2(0, -4)
+rotation = 1.5707964
+shape = SubResource("CapsuleShape2D_mvosc")
+
+[node name="DamageReceiver" parent="." unique_id=1693704388 instance=ExtResource("2_mvosc")]
+collision_layer = 64
+
+[node name="CollisionShape2D" parent="DamageReceiver" index="0" unique_id=1415051845]
+position = Vector2(0, -14)
+shape = SubResource("RectangleShape2D_mvosc")
+
+[editable path="DamageReceiver"]
