@@ -3,6 +3,7 @@
 [ext_resource type="PackedScene" uid="uid://cmeabypex8x1m" path="res://scenes/characters/character.tscn" id="1_rp718"]
 [ext_resource type="Script" uid="uid://y1hsqsqhc2nq" path="res://scenes/characters/player.gd" id="2_76oj4"]
 [ext_resource type="Texture2D" uid="uid://didi7spnh5byr" path="res://assets/art/characters/player.png" id="2_yewv4"]
+[ext_resource type="PackedScene" uid="uid://c3q5i51grj6r0" path="res://scenes/characters/enemy_slot.tscn" id="4_dyp2m"]
 
 [sub_resource type="CapsuleShape2D" id="CapsuleShape2D_yewv4"]
 radius = 2.0
@@ -290,6 +291,20 @@ collision_layer = 16
 [node name="CollisionShape2D" parent="DamageReceiver" index="0" unique_id=1415051845]
 position = Vector2(1, -17)
 shape = SubResource("RectangleShape2D_76oj4")
+
+[node name="EnemySlots" type="Node2D" parent="." index="6" unique_id=1399004470]
+
+[node name="EnemySlot" parent="EnemySlots" index="0" unique_id=1372942567 instance=ExtResource("4_dyp2m")]
+position = Vector2(17, 4)
+
+[node name="EnemySlot2" parent="EnemySlots" index="1" unique_id=826034929 instance=ExtResource("4_dyp2m")]
+position = Vector2(17, -4)
+
+[node name="EnemySlot3" parent="EnemySlots" index="2" unique_id=808250643 instance=ExtResource("4_dyp2m")]
+position = Vector2(-17, 4)
+
+[node name="EnemySlot4" parent="EnemySlots" index="3" unique_id=1511456261 instance=ExtResource("4_dyp2m")]
+position = Vector2(-17, -4)
 
 [editable path="DamageEmitter"]
 [editable path="DamageReceiver"]
