@@ -3,6 +3,7 @@ extends CharacterBody2D
 
 const GRAVITY := 600.0
 
+@export var can_respawn : bool
 @export var damage : int
 @export var duration_grounded : float
 @export var jump_intensity : float
@@ -17,9 +18,9 @@ const GRAVITY := 600.0
 @onready var damage_emitter := $DamageEmitter
 @onready var damage_receiver: DamageReceiver = $DamageReceiver
 
-enum State {IDLE, WALK, ATTACK, TAKEOFF, JUMP, LAND, JUMPKICK, HURT, FALL, GROUNDED}
+enum State {IDLE, WALK, ATTACK, TAKEOFF, JUMP, LAND, JUMPKICK, HURT, FALL, GROUNDED, DEATH}
 
-var anim_map := {
+var anim_map : Dictionary = {
 	State.IDLE: "idle",
 	State.WALK: "walk",
 	State.ATTACK: "punch",
@@ -29,7 +30,8 @@ var anim_map := {
 	State.JUMPKICK: "jumpkick",
 	State.HURT: "hurt",
 	State.FALL: "fall",
-	State.GROUNDED: "grounded"
+	State.GROUNDED: "grounded",
+	State.DEATH: "grounded"
 }
 
 var current_health = 0
@@ -49,6 +51,7 @@ func _process(delta: float) -> void:
 	handle_animations()
 	handle_air_time(delta)
 	handle_grounded()
+	handle_death(delta)
 	flip_sprites()
 	character_sprite.position = Vector2.UP * height
 	collision_shape.disabled = state == State.GROUNDED
@@ -66,7 +69,16 @@ func handle_input() -> void:
 	
 func handle_grounded() -> void:
 	if state == State.GROUNDED and (Time.get_ticks_msec() - time_since_grounded > duration_grounded):
-		state = State.LAND
+		if current_health == 0:
+			state = State.DEATH
+		else:
+			state = State.LAND
+
+func handle_death(delta: float) -> void:
+	if state == State.DEATH and not can_respawn:
+		modulate.a -= delta / 2.0
+		if modulate.a <= 0:
+			queue_free()
 	
 func handle_animations() -> void:
 	if animation_player.has_animation(anim_map[state]):
