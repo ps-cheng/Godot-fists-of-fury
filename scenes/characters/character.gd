@@ -20,6 +20,8 @@ const GRAVITY := 600.0
 
 enum State {IDLE, WALK, ATTACK, TAKEOFF, JUMP, LAND, JUMPKICK, HURT, FALL, GROUNDED, DEATH}
 
+var anim_attacks := ["punch", "punch_alt", "kick", "roundkick"]
+
 var anim_map : Dictionary = {
 	State.IDLE: "idle",
 	State.WALK: "walk",
@@ -34,6 +36,7 @@ var anim_map : Dictionary = {
 	State.DEATH: "grounded"
 }
 
+var attack_combo_index := 0
 var current_health = 0
 var height = 0.0
 var height_speed = 0.0
@@ -81,7 +84,9 @@ func handle_death(delta: float) -> void:
 			queue_free()
 	
 func handle_animations() -> void:
-	if animation_player.has_animation(anim_map[state]):
+	if state == State.ATTACK:
+		animation_player.play(anim_attacks[attack_combo_index])
+	elif animation_player.has_animation(anim_map[state]):
 		animation_player.play(anim_map[state])
 		
 func handle_air_time(delta: float) -> void:
@@ -117,6 +122,9 @@ func can_jump() -> bool:
 
 func can_jumpkick() -> bool:
 	return state == State.JUMP
+	
+func can_get_hurt() -> bool:
+	return [State.IDLE, State.WALK, State.TAKEOFF, State.JUMP, State.LAND].has(state)
 
 func on_action_complete() -> void:
 	state = State.IDLE
@@ -129,13 +137,14 @@ func on_land_complete() -> void:
 	state = State.IDLE
 
 func on_receive_damage(amount: int, direction: Vector2, hit_type: DamageReceiver.HitType) -> void:
-	current_health = clamp(current_health - amount, 0, max_health)
-	if current_health == 0 or hit_type == DamageReceiver.HitType.KNOCKDOWN:
-		state = State.FALL
-		height_speed = knockdown_intensity
-	else:
-		state = State.HURT
-	velocity = direction * knockback_intensity 
+	if can_get_hurt():
+		current_health = clamp(current_health - amount, 0, max_health)
+		if current_health == 0 or hit_type == DamageReceiver.HitType.KNOCKDOWN:
+			state = State.FALL
+			height_speed = knockdown_intensity
+		else:
+			state = State.HURT
+		velocity = direction * knockback_intensity 
 	
 func on_emit_damage(receiver: DamageReceiver) -> void:
 	var hit_type := DamageReceiver.HitType.NORMAL
