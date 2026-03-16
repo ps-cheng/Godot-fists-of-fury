@@ -5,6 +5,7 @@ const GRAVITY := 600.0
 
 @export var can_respawn : bool
 @export var damage : int
+@export var damage_power : int
 @export var duration_grounded : float
 @export var jump_intensity : float
 @export var knockback_intensity : float
@@ -40,6 +41,7 @@ var attack_combo_index := 0
 var current_health = 0
 var height = 0.0
 var height_speed = 0.0
+var is_last_hit_succesful := false
 var state = State.IDLE
 var time_since_grounded := Time.get_ticks_msec()
 
@@ -138,6 +140,7 @@ func on_land_complete() -> void:
 
 func on_receive_damage(amount: int, direction: Vector2, hit_type: DamageReceiver.HitType) -> void:
 	if can_get_hurt():
+		print(str(amount))
 		current_health = clamp(current_health - amount, 0, max_health)
 		if current_health == 0 or hit_type == DamageReceiver.HitType.KNOCKDOWN:
 			state = State.FALL
@@ -149,6 +152,11 @@ func on_receive_damage(amount: int, direction: Vector2, hit_type: DamageReceiver
 func on_emit_damage(receiver: DamageReceiver) -> void:
 	var hit_type := DamageReceiver.HitType.NORMAL
 	var direction := Vector2.LEFT if receiver.global_position.x < global_position.x else Vector2.RIGHT
+	var current_damage = damage
 	if state == State.JUMPKICK:
 		hit_type = DamageReceiver.HitType.KNOCKDOWN
-	receiver.damage_received.emit(damage, direction, hit_type)
+	if attack_combo_index == anim_attacks.size() - 1:
+		hit_type = DamageReceiver.HitType.POWER
+		current_damage = damage_power
+	receiver.damage_received.emit(current_damage, direction, hit_type)
+	is_last_hit_succesful = true
