@@ -388,7 +388,7 @@ size = Vector2(8, 8)
 
 [node name="Player" unique_id=911919632 instance=ExtResource("1_rp718")]
 collision_layer = 2
-collision_mask = 9
+collision_mask = 137
 script = ExtResource("2_76oj4")
 damage = 4
 damage_power = 6
@@ -441,3 +441,4 @@ position = Vector2(-17, -4)
 
 [editable path="DamageEmitter"]
 [editable path="DamageReceiver"]
+[editable path="CollateralDamageEmitter"]
