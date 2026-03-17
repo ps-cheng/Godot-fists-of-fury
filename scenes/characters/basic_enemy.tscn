@@ -34,6 +34,18 @@ tracks/1/keys = {
 "update": 1,
 "values": [false]
 }
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("DamageEmitter:monitoring")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [false]
+}
 
 [sub_resource type="Animation" id="Animation_6fn6m"]
 resource_name = "fall"
@@ -193,6 +205,92 @@ tracks/1/keys = {
 }]
 }
 
+[sub_resource type="Animation" id="Animation_7v0pw"]
+resource_name = "punch"
+length = 0.2
+step = 0.1
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("CharacterSprite:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.1),
+"transitions": PackedFloat32Array(1, 1),
+"update": 1,
+"values": [21, 22]
+}
+tracks/1/type = "method"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath(".")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0.2),
+"transitions": PackedFloat32Array(1),
+"values": [{
+"args": [],
+"method": &"on_action_complete"
+}]
+}
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("DamageEmitter:monitoring")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0, 0.2),
+"transitions": PackedFloat32Array(1, 1),
+"update": 1,
+"values": [true, false]
+}
+
+[sub_resource type="Animation" id="Animation_cwu1o"]
+resource_name = "punch_alt"
+length = 0.2
+step = 0.1
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("CharacterSprite:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.1),
+"transitions": PackedFloat32Array(1, 1),
+"update": 1,
+"values": [31, 32]
+}
+tracks/1/type = "method"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath(".")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0.2),
+"transitions": PackedFloat32Array(1),
+"values": [{
+"args": [],
+"method": &"on_action_complete"
+}]
+}
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("DamageEmitter:monitoring")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0, 0.2),
+"transitions": PackedFloat32Array(1, 1),
+"update": 1,
+"values": [true, false]
+}
+
 [sub_resource type="Animation" id="Animation_wh1i7"]
 resource_name = "walk"
 length = 0.8
@@ -220,6 +318,8 @@ _data = {
 &"hurt": SubResource("Animation_kcdp1"),
 &"idle": SubResource("Animation_xsmbu"),
 &"land": SubResource("Animation_wpldu"),
+&"punch": SubResource("Animation_7v0pw"),
+&"punch_alt": SubResource("Animation_cwu1o"),
 &"walk": SubResource("Animation_wh1i7")
 }
 
@@ -236,6 +336,8 @@ size = Vector2(6, 6)
 collision_layer = 4
 collision_mask = 12
 script = ExtResource("2_wh1i7")
+duration_between_hits = 4000
+duration_prep_hit = 1000
 damage = 2
 duration_grounded = 1000.0
 flight_speed = 100.0
@@ -261,6 +363,7 @@ autoplay = &"idle"
 
 [node name="DamageEmitter" parent="." index="4" unique_id=1635207698]
 position = Vector2(0, -12)
+collision_mask = 16
 
 [node name="CollisionShape2D" parent="DamageEmitter" index="0" unique_id=496274900]
 position = Vector2(7, 0)

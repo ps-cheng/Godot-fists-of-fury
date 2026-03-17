@@ -43,26 +43,14 @@ y_sort_enabled = true
 
 [node name="Player" parent="ActorsContainer" unique_id=911919632 instance=ExtResource("2_fj7yv")]
 position = Vector2(47, 43)
+knockback_intensity = 10.0
+knockdown_intensity = 70.0
 
 [node name="Barrel" parent="ActorsContainer" unique_id=711337127 instance=ExtResource("4_aqk2v")]
 position = Vector2(80, 46)
 
 [node name="BasicEnemy" parent="ActorsContainer" unique_id=1541954520 node_paths=PackedStringArray("player") instance=ExtResource("5_036b0")]
 position = Vector2(73, 57)
-player = NodePath("../Player")
-
-[node name="BasicEnemy2" parent="ActorsContainer" unique_id=745565477 node_paths=PackedStringArray("player") instance=ExtResource("5_036b0")]
-position = Vector2(26, 57)
-player = NodePath("../Player")
-
-[node name="BasicEnemy3" parent="ActorsContainer" unique_id=176662289 node_paths=PackedStringArray("player") instance=ExtResource("5_036b0")]
-position = Vector2(112, 43)
-player = NodePath("../Player")
-
-[node name="BasicEnemy4" parent="ActorsContainer" unique_id=1679189203 node_paths=PackedStringArray("player") instance=ExtResource("5_036b0")]
-position = Vector2(9, 39)
-player = NodePath("../Player")
-
-[node name="BasicEnemy5" parent="ActorsContainer" unique_id=126213137 node_paths=PackedStringArray("player") instance=ExtResource("5_036b0")]
-position = Vector2(93, 57)
+duration_between_hits = 2000
+duration_prep_hit = 500
 player = NodePath("../Player")

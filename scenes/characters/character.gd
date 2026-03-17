@@ -21,9 +21,9 @@ const GRAVITY := 600.0
 @onready var damage_emitter := $DamageEmitter
 @onready var damage_receiver: DamageReceiver = $DamageReceiver
 
-enum State {IDLE, WALK, ATTACK, TAKEOFF, JUMP, LAND, JUMPKICK, HURT, FALL, GROUNDED, DEATH, FLY}
+enum State {IDLE, WALK, ATTACK, TAKEOFF, JUMP, LAND, JUMPKICK, HURT, FALL, GROUNDED, DEATH, FLY, PREP_ATTACK}
 
-var anim_attacks := ["punch", "punch_alt", "kick", "roundkick"]
+var anim_attacks := []
 
 var anim_map : Dictionary = {
 	State.IDLE: "idle",
@@ -37,7 +37,8 @@ var anim_map : Dictionary = {
 	State.FALL: "fall",
 	State.GROUNDED: "grounded",
 	State.DEATH: "grounded",
-	State.FLY: "fly"
+	State.FLY: "fly",
+	State.PREP_ATTACK: "idle"
 }
 
 var attack_combo_index := 0
@@ -61,6 +62,7 @@ func _process(delta: float) -> void:
 	handle_movement()
 	handle_animations()
 	handle_air_time(delta)
+	handle_prep_attack()
 	handle_grounded()
 	handle_death(delta)
 	set_heading()
@@ -78,6 +80,9 @@ func handle_movement():
 	
 func handle_input() -> void:
 	pass
+	
+func handle_prep_attack() -> void:
+	pass	
 	
 func handle_grounded() -> void:
 	if state == State.GROUNDED and (Time.get_ticks_msec() - time_since_grounded > duration_grounded):
@@ -183,7 +188,7 @@ func on_emit_collateral_damage(receiver: DamageReceiver) -> void:
 		var direction := Vector2.LEFT if receiver.global_position.x < global_position.x else Vector2.RIGHT
 		receiver.damage_received.emit(0, direction, DamageReceiver.HitType.KNOCKDOWN)
 	
-func on_wall_hit(wall: AnimatableBody2D) -> void:
+func on_wall_hit(_wall: AnimatableBody2D) -> void:
 	state = State.FALL
 	height_speed = knockdown_intensity
 	velocity = -velocity / 2.0
