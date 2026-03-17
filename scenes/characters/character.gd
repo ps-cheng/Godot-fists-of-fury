@@ -42,6 +42,7 @@ var anim_map : Dictionary = {
 
 var attack_combo_index := 0
 var current_health = 0
+var heading := Vector2.RIGHT
 var height = 0.0
 var height_speed = 0.0
 var is_last_hit_succesful := false
@@ -62,6 +63,7 @@ func _process(delta: float) -> void:
 	handle_air_time(delta)
 	handle_grounded()
 	handle_death(delta)
+	set_heading()
 	flip_sprites()
 	character_sprite.position = Vector2.UP * height
 	collision_shape.disabled = is_collision_disabled()
@@ -109,9 +111,12 @@ func handle_air_time(delta: float) -> void:
 			velocity = Vector2.ZERO
 		else:
 			height_speed -= GRAVITY * delta
-		
+
+func set_heading() -> void:
+	pass
+	
 func flip_sprites() -> void:
-	if velocity.x > 0:
+	if heading == Vector2.RIGHT:
 		character_sprite.flip_h = false
 		damage_emitter.scale.x = 1
 	elif velocity.x < 0:
