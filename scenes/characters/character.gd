@@ -59,7 +59,7 @@ func _process(delta: float) -> void:
 	handle_death(delta)
 	flip_sprites()
 	character_sprite.position = Vector2.UP * height
-	collision_shape.disabled = state == State.GROUNDED
+	collision_shape.disabled = is_collision_enabled()
 	move_and_slide()
 	
 func handle_movement():
@@ -127,6 +127,9 @@ func can_jumpkick() -> bool:
 	
 func can_get_hurt() -> bool:
 	return [State.IDLE, State.WALK, State.TAKEOFF, State.JUMP, State.LAND].has(state)
+
+func is_collision_enabled() -> bool:
+	return [State.GROUNDED, State.DEATH].has(state)
 
 func on_action_complete() -> void:
 	state = State.IDLE
