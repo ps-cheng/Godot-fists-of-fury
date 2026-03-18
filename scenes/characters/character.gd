@@ -204,6 +204,7 @@ func on_pickup_complete() -> void:
 
 func on_receive_damage(amount: int, direction: Vector2, hit_type: DamageReceiver.HitType) -> void:
 	if can_get_hurt():
+		can_respawn_knives = false
 		if has_knife:
 			has_knife = false
 			time_since_knife_dismiss = Time.get_ticks_msec()
