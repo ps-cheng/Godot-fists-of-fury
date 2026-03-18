@@ -8,6 +8,7 @@ const GRAVITY := 600.0
 @export var damage_power : int
 @export var duration_grounded : float
 @export var flight_speed : float
+@export var has_knife : bool
 @export var jump_intensity : float
 @export var knockback_intensity : float
 @export var knockdown_intensity : float
@@ -20,6 +21,7 @@ const GRAVITY := 600.0
 @onready var collision_shape := $CollisionShape2D
 @onready var damage_emitter := $DamageEmitter
 @onready var damage_receiver: DamageReceiver = $DamageReceiver
+@onready var knife_sprite := $KnifeSprite
 
 enum State {IDLE, WALK, ATTACK, TAKEOFF, JUMP, LAND, JUMPKICK, HURT, FALL, GROUNDED, DEATH, FLY, PREP_ATTACK}
 
@@ -67,7 +69,9 @@ func _process(delta: float) -> void:
 	handle_death(delta)
 	set_heading()
 	flip_sprites()
+	knife_sprite.visible = has_knife
 	character_sprite.position = Vector2.UP * height
+	knife_sprite.position = Vector2.UP * height
 	collision_shape.disabled = is_collision_disabled()
 	move_and_slide()
 	
@@ -123,9 +127,11 @@ func set_heading() -> void:
 func flip_sprites() -> void:
 	if heading == Vector2.RIGHT:
 		character_sprite.flip_h = false
+		knife_sprite.flip_h = false
 		damage_emitter.scale.x = 1
 	elif velocity.x < 0:
 		character_sprite.flip_h = true
+		knife_sprite.flip_h = true
 		damage_emitter.scale.x = -1
 
 func can_attack() -> bool:

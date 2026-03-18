@@ -28,6 +28,8 @@ offset = Vector2(-7, 0)
 
 [node name="CollateralDamageEmitter" parent="." unique_id=1881846410 instance=ExtResource("3_e22cc")]
 
+[node name="KnifeSprite" type="Sprite2D" parent="." unique_id=333307400]
+
 [editable path="DamageEmitter"]
 [editable path="DamageReceiver"]
 [editable path="CollateralDamageEmitter"]
