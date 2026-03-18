@@ -30,6 +30,16 @@ offset = Vector2(-7, 0)
 
 [node name="KnifeSprite" type="Sprite2D" parent="." unique_id=333307400]
 
+[node name="ProjectileAim" type="RayCast2D" parent="." unique_id=1718731686]
+target_position = Vector2(100, 0)
+collision_mask = 0
+
+[node name="CollectibleSensor" type="Area2D" parent="." unique_id=452470810]
+collision_layer = 0
+collision_mask = 0
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="CollectibleSensor" unique_id=2121642535]
+
 [editable path="DamageEmitter"]
 [editable path="DamageReceiver"]
 [editable path="CollateralDamageEmitter"]

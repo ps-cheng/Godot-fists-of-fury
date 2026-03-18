@@ -5,6 +5,7 @@
 [ext_resource type="PackedScene" uid="uid://25wfy4npumw6" path="res://scenes/characters/player.tscn" id="2_fj7yv"]
 [ext_resource type="PackedScene" uid="uid://bsw265i5mglvj" path="res://scenes/props/barrel.tscn" id="4_aqk2v"]
 [ext_resource type="PackedScene" uid="uid://bpbirds0ua111" path="res://scenes/characters/basic_enemy.tscn" id="5_036b0"]
+[ext_resource type="PackedScene" uid="uid://bpi2kcxdpgosl" path="res://scenes/props/knife.tscn" id="6_dwbse"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_tlwt5"]
 size = Vector2(6, 64)
@@ -51,6 +52,9 @@ position = Vector2(80, 46)
 
 [node name="BasicEnemy" parent="ActorsContainer" unique_id=1541954520 node_paths=PackedStringArray("player") instance=ExtResource("5_036b0")]
 position = Vector2(73, 57)
-duration_between_hits = 2000
-duration_prep_hit = 500
 player = NodePath("../Player")
+can_respawn_knives = true
+duration_between_knife_respawn = 2000
+
+[node name="Knife" parent="ActorsContainer" unique_id=775348445 instance=ExtResource("6_dwbse")]
+position = Vector2(25, 54)
