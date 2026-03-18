@@ -23,7 +23,7 @@ const GRAVITY := 600.0
 @onready var damage_receiver: DamageReceiver = $DamageReceiver
 @onready var knife_sprite := $KnifeSprite
 
-enum State {IDLE, WALK, ATTACK, TAKEOFF, JUMP, LAND, JUMPKICK, HURT, FALL, GROUNDED, DEATH, FLY, PREP_ATTACK}
+enum State {IDLE, WALK, ATTACK, TAKEOFF, JUMP, LAND, JUMPKICK, HURT, FALL, GROUNDED, DEATH, FLY, PREP_ATTACK, THROW}
 
 var anim_attacks := []
 
@@ -40,7 +40,8 @@ var anim_map : Dictionary = {
 	State.GROUNDED: "grounded",
 	State.DEATH: "grounded",
 	State.FLY: "fly",
-	State.PREP_ATTACK: "idle"
+	State.PREP_ATTACK: "idle",
+	State.THROW: "throw"
 }
 
 var attack_combo_index := 0
@@ -155,6 +156,10 @@ func is_collision_disabled() -> bool:
 func on_action_complete() -> void:
 	state = State.IDLE
 
+func on_throw_complete() -> void:
+	state = State.IDLE
+	has_knife = false
+
 func on_takeoff_complete() -> void:
 	state = State.JUMP
 	height_speed = jump_intensity
@@ -164,7 +169,8 @@ func on_land_complete() -> void:
 
 func on_receive_damage(amount: int, direction: Vector2, hit_type: DamageReceiver.HitType) -> void:
 	if can_get_hurt():
-		print(str(amount))
+		if has_knife:
+			has_knife = false
 		current_health = clamp(current_health - amount, 0, max_health)
 		if current_health == 0 or hit_type == DamageReceiver.HitType.KNOCKDOWN:
 			state = State.FALL
