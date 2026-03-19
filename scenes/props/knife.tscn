@@ -44,6 +44,18 @@ tracks/2/keys = {
 "update": 1,
 "values": [false]
 }
+tracks/3/type = "value"
+tracks/3/imported = false
+tracks/3/enabled = true
+tracks/3/path = NodePath("DamageEmitter:monitoring")
+tracks/3/interp = 1
+tracks/3/loop_wrap = true
+tracks/3/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [false]
+}
 
 [sub_resource type="Animation" id="Animation_0neuj"]
 resource_name = "fall"
@@ -104,6 +116,18 @@ tracks/1/keys = {
 "update": 1,
 "values": [false]
 }
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("DamageEmitter:monitoring")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [true]
+}
 
 [sub_resource type="Animation" id="Animation_tem5o"]
 resource_name = "grounded"
@@ -155,7 +179,11 @@ _data = {
 &"grounded": SubResource("Animation_tem5o")
 }
 
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_t48b8"]
+size = Vector2(3, 3)
+
 [node name="Knife" unique_id=775348445 instance=ExtResource("1_a56y7")]
+damage = 4
 
 [node name="CollisionShape2D" parent="." index="0" unique_id=912644106]
 position = Vector2(0, -3)
@@ -174,3 +202,11 @@ offset = Vector2(-3, -1)
 
 [node name="AnimationPlayer" parent="." index="3" unique_id=314017852]
 libraries/ = SubResource("AnimationLibrary_t48b8")
+
+[node name="DamageEmitter" parent="." index="4" unique_id=1635207698]
+collision_mask = 176
+
+[node name="CollisionShape2D" parent="DamageEmitter" index="0" unique_id=496274900]
+shape = SubResource("RectangleShape2D_t48b8")
+
+[editable path="DamageEmitter"]

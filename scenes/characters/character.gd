@@ -28,6 +28,7 @@ const GRAVITY := 600.0
 @onready var knife_sprite := $KnifeSprite
 @onready var projectile_aim : RayCast2D = $ProjectileAim
 @onready var throw_knife_timer: Timer = $ThrowKnifeTimer
+@onready var weapon_position: Node2D = $KnifeSprite/WeaponPosition
 
 enum State {IDLE, WALK, ATTACK, TAKEOFF, JUMP, LAND, JUMPKICK, HURT, FALL, GROUNDED, DEATH, FLY, PREP_ATTACK, THROW, PICKUP}
 
@@ -70,7 +71,6 @@ func _ready() -> void:
 	current_health = max_health
 
 func _process(delta: float) -> void:
-	print(throw_knife_timer.time_left)
 	handle_input()
 	handle_movement()
 	handle_animations()
@@ -144,12 +144,12 @@ func set_heading() -> void:
 func flip_sprites() -> void:
 	if heading == Vector2.RIGHT:
 		character_sprite.flip_h = false
-		knife_sprite.flip_h = false
+		knife_sprite.scale.x = 1
 		projectile_aim.scale.x = 1
 		damage_emitter.scale.x = 1
 	elif velocity.x < 0:
 		character_sprite.flip_h = true
-		knife_sprite.flip_h = true
+		knife_sprite.scale.x = -1
 		projectile_aim.scale.x = -1
 		damage_emitter.scale.x = -1
 
@@ -194,6 +194,9 @@ func on_action_complete() -> void:
 func on_throw_complete() -> void:
 	state = State.IDLE
 	has_knife = false
+	var knife_global_position := Vector2(weapon_position.global_position.x, global_position.y)
+	var knife_height := -weapon_position.position.y
+	EntityManager.spawn_collectible.emit(Collectible.Type.KNIFE, Collectible.State.FLY, knife_global_position, heading, knife_height)
 
 func on_takeoff_complete() -> void:
 	state = State.JUMP

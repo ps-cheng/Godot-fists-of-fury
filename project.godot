@@ -15,6 +15,10 @@ run/main_scene="uid://c0ees5lp8qng3"
 config/features=PackedStringArray("4.6", "GL Compatibility")
 config/icon="res://icon.svg"
 
+[autoload]
+
+EntityManager="*uid://cl5fmyxrasncu"
+
 [debug]
 
 gdscript/warnings/unused_signal=0

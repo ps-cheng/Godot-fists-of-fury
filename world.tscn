@@ -3,6 +3,7 @@
 [ext_resource type="PackedScene" uid="uid://jrp3x1d7w28m" path="res://scenes/stage/stage.tscn" id="1_f3sb7"]
 [ext_resource type="Script" uid="uid://c0ctoo227jjd2" path="res://world.gd" id="1_tlwt5"]
 [ext_resource type="PackedScene" uid="uid://25wfy4npumw6" path="res://scenes/characters/player.tscn" id="2_fj7yv"]
+[ext_resource type="Script" uid="uid://b0mrjiuguysmr" path="res://scenes/stage/actors_container.gd" id="3_gbfbk"]
 [ext_resource type="PackedScene" uid="uid://bsw265i5mglvj" path="res://scenes/props/barrel.tscn" id="4_aqk2v"]
 [ext_resource type="PackedScene" uid="uid://bpbirds0ua111" path="res://scenes/characters/basic_enemy.tscn" id="5_036b0"]
 [ext_resource type="PackedScene" uid="uid://bpi2kcxdpgosl" path="res://scenes/props/knife.tscn" id="6_dwbse"]
@@ -42,6 +43,7 @@ shape = SubResource("RectangleShape2D_tlwt5")
 
 [node name="ActorsContainer" type="Node2D" parent="." unique_id=2049294413]
 y_sort_enabled = true
+script = ExtResource("3_gbfbk")
 
 [node name="Player" parent="ActorsContainer" unique_id=911919632 instance=ExtResource("2_fj7yv")]
 position = Vector2(47, 43)
