@@ -47,7 +47,8 @@ func goto_range_position() -> void:
 		
 	if can_throw() and has_knife and projectile_aim.is_colliding():
 		state = State.THROW
-		time_since_knife_dismiss = Time.get_ticks_msec()
+		can_throw_knife = false
+		throw_knife_timer.start(duration_between_knife_respawn / 1000.0)
 		time_since_last_range_attack = Time.get_ticks_msec()
 
 func goto_melee_position() -> void:

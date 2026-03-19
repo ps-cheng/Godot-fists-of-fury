@@ -16,6 +16,9 @@ speed = 28.0
 [node name="CharacterSprite" parent="." index="1" unique_id=1895011757]
 texture = ExtResource("2_jdxqa")
 
+[node name="GroundedTimer" parent="." index="10" unique_id=2039402428]
+one_shot = false
+
 [editable path="DamageEmitter"]
 [editable path="DamageReceiver"]
 [editable path="CollateralDamageEmitter"]

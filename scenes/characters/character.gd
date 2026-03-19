@@ -24,8 +24,10 @@ const GRAVITY := 600.0
 @onready var collision_shape := $CollisionShape2D
 @onready var damage_emitter := $DamageEmitter
 @onready var damage_receiver: DamageReceiver = $DamageReceiver
+@onready var grounded_timer: Timer = $GroundedTimer
 @onready var knife_sprite := $KnifeSprite
 @onready var projectile_aim : RayCast2D = $ProjectileAim
+@onready var throw_knife_timer: Timer = $ThrowKnifeTimer
 
 enum State {IDLE, WALK, ATTACK, TAKEOFF, JUMP, LAND, JUMPKICK, HURT, FALL, GROUNDED, DEATH, FLY, PREP_ATTACK, THROW, PICKUP}
 
@@ -56,8 +58,9 @@ var height = 0.0
 var height_speed = 0.0
 var is_last_hit_succesful := false
 var state = State.IDLE
-var time_since_grounded := Time.get_ticks_msec()
 var time_since_knife_dismiss := Time.get_ticks_msec()
+var can_get_up := false
+var can_throw_knife := true
 
 func _ready() -> void:
 	damage_emitter.area_entered.connect(on_emit_damage.bind())
@@ -67,6 +70,7 @@ func _ready() -> void:
 	current_health = max_health
 
 func _process(delta: float) -> void:
+	print(throw_knife_timer.time_left)
 	handle_input()
 	handle_movement()
 	handle_animations()
@@ -97,14 +101,14 @@ func handle_prep_attack() -> void:
 	pass	
 	
 func handle_grounded() -> void:
-	if state == State.GROUNDED and (Time.get_ticks_msec() - time_since_grounded > duration_grounded):
+	if state == State.GROUNDED and can_get_up:
 		if current_health == 0:
 			state = State.DEATH
 		else:
 			state = State.LAND
 
 func handle_knife_respawns() -> void:
-	if can_respawn_knives and not has_knife and (Time.get_ticks_msec() - time_since_knife_dismiss > duration_between_knife_respawn):
+	if can_respawn_knives and not has_knife and can_throw_knife:
 		has_knife = true
 
 func handle_death(delta: float) -> void:
@@ -126,7 +130,8 @@ func handle_air_time(delta: float) -> void:
 			height = 0
 			if state == State.FALL:
 				state = State.GROUNDED
-				time_since_grounded = Time.get_ticks_msec()
+				can_get_up = false
+				grounded_timer.start(duration_grounded / 1000.0)
 			else:
 				state = State.LAND
 			velocity = Vector2.ZERO
@@ -178,7 +183,6 @@ func pickup_collectible() -> void:
 		var collectible : Collectible = collectible_areas[0]
 		if collectible.type == Collectible.Type.KNIFE and not has_knife:
 			has_knife = true
-			
 		collectible.queue_free()
 
 func is_collision_disabled() -> bool:
@@ -207,7 +211,8 @@ func on_receive_damage(amount: int, direction: Vector2, hit_type: DamageReceiver
 		can_respawn_knives = false
 		if has_knife:
 			has_knife = false
-			time_since_knife_dismiss = Time.get_ticks_msec()
+			can_throw_knife = false
+			throw_knife_timer.start(duration_between_knife_respawn / 1000.0)
 		current_health = clamp(current_health - amount, 0, max_health)
 		if current_health == 0 or hit_type == DamageReceiver.HitType.KNOCKDOWN:
 			state = State.FALL
@@ -241,3 +246,9 @@ func on_wall_hit(_wall: AnimatableBody2D) -> void:
 	state = State.FALL
 	height_speed = knockdown_intensity
 	velocity = -velocity / 2.0
+
+func _on_grounded_timer_timeout() -> void:
+	can_get_up = true
+	
+func _on_throw_knife_timer_timeout() -> void:
+	can_throw_knife = true
