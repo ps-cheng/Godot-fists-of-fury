@@ -19,6 +19,10 @@ texture = ExtResource("2_jdxqa")
 [node name="GroundedTimer" parent="." index="10" unique_id=2039402428]
 one_shot = false
 
+[node name="PickupKnifeTimer" type="Timer" parent="." index="11" unique_id=843235983]
+
+[connection signal="timeout" from="PickupKnifeTimer" to="." method="_on_pickup_knife_timer_timeout"]
+
 [editable path="DamageEmitter"]
 [editable path="DamageReceiver"]
 [editable path="CollateralDamageEmitter"]

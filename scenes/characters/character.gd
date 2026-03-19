@@ -85,6 +85,8 @@ func _process(delta: float) -> void:
 	character_sprite.position = Vector2.UP * height
 	knife_sprite.position = Vector2.UP * height
 	collision_shape.disabled = is_collision_disabled()
+	damage_emitter.monitoring = is_attacking()
+	damage_receiver.monitorable = can_get_hurt()
 	move_and_slide()
 	
 func handle_movement():
@@ -166,7 +168,7 @@ func can_jumpkick() -> bool:
 	return state == State.JUMP
 	
 func can_get_hurt() -> bool:
-	return [State.IDLE, State.WALK, State.TAKEOFF, State.LAND].has(state)
+	return [State.IDLE, State.WALK, State.TAKEOFF, State.LAND, State.PREP_ATTACK].has(state)
 
 func can_pickup_collectible() -> bool:
 	var collectible_areas := collectible_sensor.get_overlapping_areas()
@@ -184,6 +186,9 @@ func pickup_collectible() -> void:
 		if collectible.type == Collectible.Type.KNIFE and not has_knife:
 			has_knife = true
 		collectible.queue_free()
+
+func is_attacking() -> bool:
+	return [State.ATTACK, State.JUMPKICK].has(state)
 
 func is_collision_disabled() -> bool:
 	return [State.GROUNDED, State.DEATH, State.FLY].has(state)
