@@ -1,0 +1,13 @@
+[gd_scene format=3 uid="uid://ptmeu45546l0"]
+
+[ext_resource type="Script" uid="uid://b2rnf3wpp488m" path="res://scenes/props/shot.gd" id="1_6t3n6"]
+
+[sub_resource type="Gradient" id="Gradient_iq70w"]
+offsets = PackedFloat32Array(0, 0.9876033)
+colors = PackedColorArray(1, 1, 1, 1, 1, 1, 0, 1)
+
+[node name="Shot" type="Line2D" unique_id=1710324750]
+width = 1.0
+gradient = SubResource("Gradient_iq70w")
+script = ExtResource("1_6t3n6")
+duration_shot_across_screen = 200.0

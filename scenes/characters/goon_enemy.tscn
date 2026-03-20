@@ -16,10 +16,10 @@ speed = 28.0
 [node name="CharacterSprite" parent="." index="1" unique_id=1895011757]
 texture = ExtResource("2_jdxqa")
 
-[node name="GroundedTimer" parent="." index="10" unique_id=2039402428]
-one_shot = false
-
 [node name="PickupKnifeTimer" type="Timer" parent="." index="11" unique_id=843235983]
+
+[node name="GroundedTimer" parent="." index="12" unique_id=2039402428]
+one_shot = false
 
 [connection signal="timeout" from="PickupKnifeTimer" to="." method="_on_pickup_knife_timer_timeout"]
 

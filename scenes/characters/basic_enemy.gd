@@ -21,7 +21,7 @@ func _ready() -> void:
 
 func handle_input() -> void:
 	if player != null and can_move():
-		if can_respawn_knives or has_knife:
+		if can_respawn_knives or has_knife or has_gun:
 			goto_range_position()
 		else:
 			goto_melee_position()
@@ -45,10 +45,15 @@ func goto_range_position() -> void:
 	else:
 		velocity = (closest_destination - position).normalized() * speed
 		
-	if can_throw() and has_knife and projectile_aim.is_colliding():
+	if can_range_attack() and has_knife and projectile_aim.is_colliding():
 		state = State.THROW
 		can_throw_knife = false
 		throw_knife_timer.start(duration_between_knife_respawn / 1000.0)
+		time_since_last_range_attack = Time.get_ticks_msec()
+	
+	if can_range_attack() and has_gun and projectile_aim.is_colliding():
+		state = State.PREP_SHOOT
+		time_since_prep_range_attack = Time.get_ticks_msec()
 		time_since_last_range_attack = Time.get_ticks_msec()
 
 func goto_melee_position() -> void:
@@ -75,6 +80,11 @@ func handle_prep_attack() -> void:
 		time_since_last_melee_attack = Time.get_ticks_msec()
 		anim_attacks.shuffle()
 
+func handle_prep_shoot() -> void:
+	if state == State.PREP_SHOOT and(Time.get_ticks_msec() - time_since_prep_range_attack > duration_prep_range_attack):
+		shoot_gun()
+		time_since_last_range_attack = Time.get_ticks_msec()
+
 func is_player_within_range() -> bool:
 	return (player_slot.global_position - global_position).length() < 1
 
@@ -83,7 +93,7 @@ func can_attack() -> bool:
 		return false
 	return super.can_attack()
 	
-func can_throw() -> bool:
+func can_range_attack() -> bool:
 	if (Time.get_ticks_msec() - time_since_last_range_attack < duration_between_range_attacks):
 		return false
 	return super.can_attack()
