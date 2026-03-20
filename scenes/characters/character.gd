@@ -3,23 +3,27 @@ extends CharacterBody2D
 
 const GRAVITY := 600.0
 
-@export var autodestroy_on_drop : bool
 @export var can_respawn : bool
-@export var can_respawn_knives : bool
 @export var damage : int
-@export var damage_gunshot : int
-@export var damage_power : int
+@export var max_health : int
+
+@export_group("Movement")
 @export var duration_grounded : float
-@export var duration_between_knife_respawn : int
 @export var flight_speed : float
-@export var has_knife : bool
-@export var has_gun : bool
 @export var jump_intensity : float
 @export var knockback_intensity : float
 @export var knockdown_intensity : float
-@export var max_ammo_per_gun : int
-@export var max_health : int
 @export var speed : float
+
+@export_group("Weapons")
+@export var autodestroy_on_drop : bool
+@export var can_respawn_knives : bool
+@export var damage_gunshot : int
+@export var damage_power : int
+@export var duration_between_knife_respawn : int
+@export var has_knife : bool
+@export var has_gun : bool
+@export var max_ammo_per_gun : int
 
 @onready var animation_player := $AnimationPlayer
 @onready var character_sprite := $CharacterSprite
@@ -262,6 +266,7 @@ func on_pickup_complete() -> void:
 
 func on_receive_damage(amount: int, direction: Vector2, hit_type: DamageReceiver.HitType) -> void:
 	if can_get_hurt():
+		attack_combo_index = 0
 		can_respawn_knives = false
 		if has_knife:
 			has_knife = false
