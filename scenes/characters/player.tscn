@@ -907,12 +907,15 @@ size = Vector2(3, 3)
 collision_layer = 2
 collision_mask = 137
 script = ExtResource("2_76oj4")
+autodestroy_on_drop = true
+can_respawn = true
 damage = 4
 damage_gunshot = 8
 damage_power = 6
 duration_grounded = 1000.0
 has_knife = true
 jump_intensity = 150.0
+max_ammo_per_gun = 3
 max_health = 30
 speed = 35.0
 

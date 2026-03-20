@@ -3,6 +3,7 @@ extends CharacterBody2D
 
 const GRAVITY := 600.0
 
+@export var autodestroy_on_drop : bool
 @export var can_respawn : bool
 @export var can_respawn_knives : bool
 @export var damage : int
@@ -16,6 +17,7 @@ const GRAVITY := 600.0
 @export var jump_intensity : float
 @export var knockback_intensity : float
 @export var knockdown_intensity : float
+@export var max_ammo_per_gun : int
 @export var max_health : int
 @export var speed : float
 
@@ -35,8 +37,8 @@ const GRAVITY := 600.0
 
 enum State {IDLE, WALK, ATTACK, TAKEOFF, JUMP, LAND, JUMPKICK, HURT, FALL, GROUNDED, DEATH, FLY, PREP_ATTACK, THROW, PICKUP, SHOOT, PREP_SHOOT}
 
+var ammo_left := 0
 var anim_attacks := []
-
 var anim_map : Dictionary = {
 	State.IDLE: "idle",
 	State.WALK: "walk",
@@ -56,7 +58,6 @@ var anim_map : Dictionary = {
 	State.SHOOT: "shoot",
 	State.PREP_SHOOT: "idle"
 }
-
 var attack_combo_index := 0
 var current_health = 0
 var heading := Vector2.RIGHT
@@ -184,13 +185,17 @@ func can_get_hurt() -> bool:
 	return [State.IDLE, State.WALK, State.TAKEOFF, State.LAND, State.PREP_ATTACK].has(state)
 
 func can_pickup_collectible() -> bool:
+	if can_respawn_knives:
+		return false
 	var collectible_areas := collectible_sensor.get_overlapping_areas()
 	if collectible_areas.size() == 0:
 		return false
 	var collectible : Collectible = collectible_areas[0]
-	if collectible.type == Collectible.Type.KNIFE and not has_knife:
+	if collectible.type == Collectible.Type.KNIFE and not is_carrying_weapon() :
 		return true
-	if collectible.type == Collectible.Type.GUN and not has_gun:
+	if collectible.type == Collectible.Type.GUN and not is_carrying_weapon():
+		return true
+	if collectible.type == Collectible.Type.FOOD:
 		return true
 	return false
 	
@@ -215,10 +220,16 @@ func pickup_collectible() -> void:
 			has_knife = true
 		if collectible.type == Collectible.Type.GUN and not has_gun:
 			has_gun = true
+			ammo_left = max_ammo_per_gun
+		if collectible.type == Collectible.Type.FOOD:
+			current_health = max_health
 		collectible.queue_free()
 
 func is_attacking() -> bool:
 	return [State.ATTACK, State.JUMPKICK].has(state)
+	
+func is_carrying_weapon() -> bool:
+	return has_knife or has_gun
 
 func is_collision_disabled() -> bool:
 	return [State.GROUNDED, State.DEATH, State.FLY].has(state)
@@ -228,10 +239,15 @@ func on_action_complete() -> void:
 
 func on_throw_complete() -> void:
 	state = State.IDLE
-	has_knife = false
-	var knife_global_position := Vector2(weapon_position.global_position.x, global_position.y)
-	var knife_height := -weapon_position.position.y
-	EntityManager.spawn_collectible.emit(Collectible.Type.KNIFE, Collectible.State.FLY, knife_global_position, heading, knife_height)
+	var collectible_type := Collectible.Type.KNIFE
+	if has_gun:
+		collectible_type = Collectible.Type.GUN
+		has_gun = false
+	else:
+		has_knife = false
+	var collectible_global_position := Vector2(weapon_position.global_position.x, global_position.y)
+	var collectible_height := -weapon_position.position.y
+	EntityManager.spawn_collectible.emit(collectible_type, Collectible.State.FLY, collectible_global_position, heading, collectible_height, false)
 
 func on_takeoff_complete() -> void:
 	state = State.JUMP
@@ -249,10 +265,12 @@ func on_receive_damage(amount: int, direction: Vector2, hit_type: DamageReceiver
 		can_respawn_knives = false
 		if has_knife:
 			has_knife = false
+			EntityManager.spawn_collectible.emit(Collectible.Type.KNIFE, Collectible.State.FALL, global_position, Vector2.ZERO, 0.0, autodestroy_on_drop)
 			can_throw_knife = false
 			throw_knife_timer.start(duration_between_knife_respawn / 1000.0)
 		if has_gun:
-			has_gun = false			
+			has_gun = false
+			EntityManager.spawn_collectible.emit(Collectible.Type.GUN, Collectible.State.FALL, global_position, Vector2.ZERO, 0.0, autodestroy_on_drop)	
 		current_health = clamp(current_health - amount, 0, max_health)
 		if current_health == 0 or hit_type == DamageReceiver.HitType.KNOCKDOWN:
 			state = State.FALL
