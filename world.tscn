@@ -4,10 +4,7 @@
 [ext_resource type="Script" uid="uid://c0ctoo227jjd2" path="res://world.gd" id="1_tlwt5"]
 [ext_resource type="PackedScene" uid="uid://25wfy4npumw6" path="res://scenes/characters/player.tscn" id="2_fj7yv"]
 [ext_resource type="Script" uid="uid://b0mrjiuguysmr" path="res://scenes/stage/actors_container.gd" id="3_gbfbk"]
-[ext_resource type="PackedScene" uid="uid://bsw265i5mglvj" path="res://scenes/props/barrel.tscn" id="4_aqk2v"]
-[ext_resource type="PackedScene" uid="uid://bpbirds0ua111" path="res://scenes/characters/basic_enemy.tscn" id="5_036b0"]
-[ext_resource type="PackedScene" uid="uid://ixpsmlldffcv" path="res://scenes/characters/goon_enemy.tscn" id="7_pkg7o"]
-[ext_resource type="PackedScene" uid="uid://b22d2nwh15u78" path="res://scenes/characters/thug_enemy.tscn" id="8_gbfbk"]
+[ext_resource type="PackedScene" uid="uid://gwyph4o5xxtl" path="res://scenes/characters/igor_boss.tscn" id="5_036b0"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_tlwt5"]
 size = Vector2(6, 64)
@@ -51,18 +48,6 @@ knockback_intensity = 10.0
 knockdown_intensity = 70.0
 has_knife = false
 
-[node name="Barrel" parent="ActorsContainer" unique_id=711337127 instance=ExtResource("4_aqk2v")]
-position = Vector2(80, 46)
-content_type = 2
-
-[node name="BasicEnemy" parent="ActorsContainer" unique_id=1065012312 node_paths=PackedStringArray("player") instance=ExtResource("5_036b0")]
-position = Vector2(70, 59)
-player = NodePath("../Player")
-
-[node name="GoonEnemy" parent="ActorsContainer" unique_id=383259180 node_paths=PackedStringArray("player") instance=ExtResource("7_pkg7o")]
-position = Vector2(89, 50)
-player = NodePath("../Player")
-
-[node name="ThugEnemy" parent="ActorsContainer" unique_id=826808675 node_paths=PackedStringArray("player") instance=ExtResource("8_gbfbk")]
-position = Vector2(14, 55)
-player = NodePath("../Player")
+[node name="IgorBoss" parent="." unique_id=1782986806 node_paths=PackedStringArray("player") instance=ExtResource("5_036b0")]
+position = Vector2(87, 57)
+player = NodePath("../ActorsContainer/Player")
