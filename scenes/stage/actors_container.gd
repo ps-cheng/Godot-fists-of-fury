@@ -16,7 +16,8 @@ const ENEMY_MAP := {
 @export var player : Player
 
 # Called when the node enters the scene tree for the first time.
-func _ready() -> void:
+func _init() -> void:
+	EntityManager.orphan_actor.connect(on_orphan_actor.bind())
 	EntityManager.spawn_collectible.connect(on_spawn_collectible.bind())
 	EntityManager.spawn_shot.connect(on_spawn_shot.bind())
 	EntityManager.spawn_enemy.connect(on_spawn_enemy.bind())
@@ -41,3 +42,6 @@ func on_spawn_enemy(enemy_data: EnemyData) -> void:
 	enemy.global_position = enemy_data.global_position
 	enemy.player = player
 	add_child(enemy)
+	
+func on_orphan_actor(orphan : Node2D) -> void:
+	orphan.reparent(self)

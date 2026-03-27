@@ -6,6 +6,7 @@
 [ext_resource type="PackedScene" uid="uid://ixpsmlldffcv" path="res://scenes/characters/goon_enemy.tscn" id="4_p7lra"]
 [ext_resource type="PackedScene" uid="uid://bpbirds0ua111" path="res://scenes/characters/basic_enemy.tscn" id="5_j5gp6"]
 [ext_resource type="PackedScene" uid="uid://b22d2nwh15u78" path="res://scenes/characters/thug_enemy.tscn" id="6_mslao"]
+[ext_resource type="PackedScene" uid="uid://bsw265i5mglvj" path="res://scenes/props/barrel.tscn" id="7_2j5k0"]
 
 [node name="Stage-01-Streets" unique_id=1132328735 instance=ExtResource("1_lluwt")]
 
@@ -45,6 +46,14 @@ position = Vector2(61, 91)
 
 [node name="BasicEnemy3" parent="Checkpoints/Checkpoint2/Enemies" parent_id_path=PackedInt32Array(328018651, 1401944699) index="4" unique_id=1487538377 instance=ExtResource("5_j5gp6")]
 position = Vector2(82, 91)
+
+[node name="Barrel" parent="Containers" parent_id_path=PackedInt32Array(149319910) index="0" unique_id=711337127 instance=ExtResource("7_2j5k0")]
+position = Vector2(28, 47)
+content_type = 2
+
+[node name="Barrel2" parent="Containers" parent_id_path=PackedInt32Array(149319910) index="1" unique_id=2040726371 instance=ExtResource("7_2j5k0")]
+position = Vector2(135, 57)
+content_type = 1
 
 [editable path="Checkpoints/Checkpoint"]
 [editable path="Checkpoints/Checkpoint2"]

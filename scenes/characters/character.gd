@@ -95,16 +95,25 @@ func _process(delta: float) -> void:
 	handle_death(delta)
 	set_heading()
 	flip_sprites()
+	set_sprite_visibility()
+	set_sprite_height_position()
+	setup_collisions()
+	move_and_slide()
+
+func set_sprite_visibility() -> void:	
 	knife_sprite.visible = has_knife
 	gun_sprite.visible = has_gun
+
+func set_sprite_height_position() -> void:
 	character_sprite.position = Vector2.UP * height
 	knife_sprite.position = Vector2.UP * height
 	gun_sprite.position = Vector2.UP * height
+
+func setup_collisions() -> void:	
 	collision_shape.disabled = is_collision_disabled()
 	damage_emitter.monitoring = is_attacking()
 	damage_receiver.monitorable = can_get_hurt()
 	collateral_damage_emitter.monitoring = state == State.FLY
-	move_and_slide()
 	
 func handle_movement():
 	if can_move():
