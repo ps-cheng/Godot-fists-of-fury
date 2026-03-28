@@ -34,3 +34,5 @@ shape = SubResource("RectangleShape2D_ecxui")
 [node name="Checkpoints" type="Node2D" parent="." unique_id=130865797]
 
 [node name="Containers" type="Node2D" parent="." unique_id=149319910]
+
+[node name="Doors" type="Node2D" parent="." unique_id=1553758808]

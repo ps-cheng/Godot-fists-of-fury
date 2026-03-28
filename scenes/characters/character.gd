@@ -40,7 +40,7 @@ const GRAVITY := 600.0
 @onready var throw_knife_timer: Timer = $ThrowKnifeTimer
 @onready var weapon_position: Node2D = $KnifeSprite/WeaponPosition
 
-enum State {IDLE, WALK, ATTACK, TAKEOFF, JUMP, LAND, JUMPKICK, HURT, FALL, GROUNDED, DEATH, FLY, PREP_ATTACK, THROW, PICKUP, SHOOT, PREP_SHOOT, RECOVER}
+enum State {IDLE, WALK, ATTACK, TAKEOFF, JUMP, LAND, JUMPKICK, HURT, FALL, GROUNDED, DEATH, FLY, PREP_ATTACK, THROW, PICKUP, SHOOT, PREP_SHOOT, RECOVER, DROP, WAIT}
 enum Type {PLAYER, PUNK, GOON, THUG, BOUNCER}
 
 var ammo_left := 0
@@ -63,7 +63,9 @@ var anim_map : Dictionary = {
 	State.PICKUP: "pickup",
 	State.SHOOT: "shoot",
 	State.PREP_SHOOT: "idle",
-	State.RECOVER: "recover"
+	State.RECOVER: "recover",
+	State.DROP: "idle",
+	State.WAIT: "idle"
 }
 var attack_combo_index := 0
 var current_health = 0
@@ -81,7 +83,8 @@ func _ready() -> void:
 	damage_receiver.damage_received.connect(on_receive_damage.bind())
 	collateral_damage_emitter.area_entered.connect(on_emit_collateral_damage.bind())
 	collateral_damage_emitter.body_entered.connect(on_wall_hit.bind())
-	current_health = max_health
+	current_health = max_health	
+	set_sprite_height_position()
 
 func _process(delta: float) -> void:
 	handle_input()
@@ -155,7 +158,7 @@ func handle_animations() -> void:
 		animation_player.play(anim_map[state])
 		
 func handle_air_time(delta: float) -> void:
-	if [State.JUMP, State.JUMPKICK, State.FALL].has(state):
+	if [State.JUMP, State.JUMPKICK, State.FALL, State.DROP].has(state):
 		height += height_speed * delta
 		if height < 0:
 			height = 0
