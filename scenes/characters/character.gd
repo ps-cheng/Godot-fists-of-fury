@@ -40,7 +40,7 @@ const GRAVITY := 600.0
 @onready var throw_knife_timer: Timer = $ThrowKnifeTimer
 @onready var weapon_position: Node2D = $KnifeSprite/WeaponPosition
 
-enum State {IDLE, WALK, ATTACK, TAKEOFF, JUMP, LAND, JUMPKICK, HURT, FALL, GROUNDED, DEATH, FLY, PREP_ATTACK, THROW, PICKUP, SHOOT, PREP_SHOOT, RECOVER, DROP, WAIT}
+enum State {IDLE, WALK, ATTACK, TAKEOFF, JUMP, LAND, JUMPKICK, HURT, FALL, GROUNDED, DEATH, FLY, PREP_ATTACK, THROW, PICKUP, SHOOT, PREP_SHOOT, RECOVER, DROP, WAIT, APPEARING}
 enum Type {PLAYER, PUNK, GOON, THUG, BOUNCER}
 
 var ammo_left := 0
@@ -65,7 +65,8 @@ var anim_map : Dictionary = {
 	State.PREP_SHOOT: "idle",
 	State.RECOVER: "recover",
 	State.DROP: "idle",
-	State.WAIT: "idle"
+	State.WAIT: "idle",
+	State.APPEARING: "idle"
 }
 var attack_combo_index := 0
 var current_health = 0

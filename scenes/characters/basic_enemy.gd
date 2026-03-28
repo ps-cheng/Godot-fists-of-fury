@@ -3,6 +3,7 @@ extends Character
 
 const EDGE_SCREEN_BUFFER := 10
 
+@export var duration_appear : float
 @export var duration_between_melee_attacks : int
 @export var duration_between_range_attacks : int
 @export var duration_prep_melee_attack : int
@@ -15,10 +16,24 @@ var time_since_last_melee_attack := Time.get_ticks_msec()
 var time_since_prep_melee_attack := Time.get_ticks_msec()
 var time_since_last_range_attack := Time.get_ticks_msec()
 var time_since_prep_range_attack := Time.get_ticks_msec()
+var time_since_start_appearing := Time.get_ticks_msec()
 
 func _ready() -> void:
 	super._ready()
 	anim_attacks = ["punch", "punch_alt"]
+	
+func _process(delta : float) -> void:
+	super._process(delta)
+	process_appear()
+	
+func process_appear() -> void:
+	if state == State.APPEARING:
+		var progress : float = (Time.get_ticks_msec() - time_since_start_appearing) / duration_appear
+		if progress < 1:
+			modulate.a = progress
+		else:
+			modulate.a = 1
+			state = State.IDLE
 
 func handle_input() -> void:
 	if player != null and can_move():
@@ -87,10 +102,14 @@ func handle_prep_shoot() -> void:
 		time_since_last_range_attack = Time.get_ticks_msec()
 
 func assign_door(door: Door) -> void:
-	if door.state != Door.State.OPENING:
+	if door.state != Door.State.OPENED:
 		state = State.WAIT
 		door.open()
 		door.opened.connect(on_action_complete.bind())
+	else:
+		state = State.APPEARING
+		modulate.a = 0
+		time_since_start_appearing = Time.get_ticks_msec()
 
 func is_player_within_range() -> bool:
 	return (player_slot.global_position - global_position).length() < 1
