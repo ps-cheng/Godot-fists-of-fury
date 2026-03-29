@@ -84,7 +84,7 @@ func _ready() -> void:
 	damage_receiver.damage_received.connect(on_receive_damage.bind())
 	collateral_damage_emitter.area_entered.connect(on_emit_collateral_damage.bind())
 	collateral_damage_emitter.body_entered.connect(on_wall_hit.bind())
-	current_health = max_health	
+	set_health(max_health, type == Character.Type.PLAYER)	
 	set_sprite_height_position()
 
 func _process(delta: float) -> void:
@@ -245,7 +245,7 @@ func pickup_collectible() -> void:
 			has_gun = true
 			ammo_left = max_ammo_per_gun
 		if collectible.type == Collectible.Type.FOOD:
-			current_health = max_health
+			set_health(max_health)
 		collectible.queue_free()
 
 func is_attacking() -> bool:
@@ -295,7 +295,7 @@ func on_receive_damage(amount: int, direction: Vector2, hit_type: DamageReceiver
 		if has_gun:
 			has_gun = false
 			EntityManager.spawn_collectible.emit(Collectible.Type.GUN, Collectible.State.FALL, global_position, Vector2.ZERO, 0.0, autodestroy_on_drop)	
-		current_health = clamp(current_health - amount, 0, max_health)
+		set_health(current_health - amount)
 		if current_health == 0 or hit_type == DamageReceiver.HitType.KNOCKDOWN:
 			state = State.FALL
 			height_speed = knockdown_intensity
@@ -334,3 +334,8 @@ func _on_grounded_timer_timeout() -> void:
 	
 func _on_throw_knife_timer_timeout() -> void:
 	can_throw_knife = true
+	
+func set_health(health: int, emit_signal: bool = true) -> void:
+	current_health = clamp(health, 0 , max_health)
+	if emit_signal:
+		DamageManager.health_change.emit(type, current_health, max_health)

@@ -1,6 +1,7 @@
 [gd_scene format=3 uid="uid://c0ees5lp8qng3"]
 
 [ext_resource type="Script" uid="uid://c0ctoo227jjd2" path="res://world.gd" id="1_tlwt5"]
+[ext_resource type="PackedScene" uid="uid://cfpjbw4yc61w3" path="res://scenes/ui/ui.tscn" id="2_036b0"]
 [ext_resource type="PackedScene" uid="uid://25wfy4npumw6" path="res://scenes/characters/player.tscn" id="2_fj7yv"]
 [ext_resource type="Script" uid="uid://b0mrjiuguysmr" path="res://scenes/stage/actors_container.gd" id="3_gbfbk"]
 [ext_resource type="PackedScene" uid="uid://cng8r6qdij13s" path="res://scenes/stage/stage_01_streets.tscn" id="5_dwbse"]
@@ -10,6 +11,8 @@ size = Vector2(6, 64)
 
 [node name="World" type="Node2D" unique_id=2019583276]
 script = ExtResource("1_tlwt5")
+
+[node name="UI" parent="." unique_id=1394759295 instance=ExtResource("2_036b0")]
 
 [node name="Stage-01-Streets" parent="." unique_id=1132328735 instance=ExtResource("5_dwbse")]
 
@@ -50,6 +53,7 @@ knockback_intensity = 10.0
 knockdown_intensity = 70.0
 has_knife = false
 
+[editable path="UI"]
 [editable path="Stage-01-Streets"]
 [editable path="Stage-01-Streets/Checkpoints/Checkpoint"]
 [editable path="Stage-01-Streets/Checkpoints/Checkpoint2"]
