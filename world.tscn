@@ -54,6 +54,7 @@ knockdown_intensity = 70.0
 has_knife = false
 
 [editable path="UI"]
+[editable path="UI/UIContainer/EnemyHealthBar"]
 [editable path="Stage-01-Streets"]
 [editable path="Stage-01-Streets/Checkpoints/Checkpoint"]
 [editable path="Stage-01-Streets/Checkpoints/Checkpoint2"]

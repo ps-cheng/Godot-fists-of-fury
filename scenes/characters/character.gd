@@ -230,6 +230,7 @@ func shoot_gun() -> void:
 	if target != null:
 		target_point = projectile_aim.get_collision_point()
 		target.on_receive_damage(damage_gunshot, heading, DamageReceiver.HitType.KNOCKDOWN)
+		EntityManager.spawn_spark.emit(target.position)
 	var weapon_root_position := Vector2(weapon_position.global_position.x, position.y)
 	var weapon_height := -weapon_position.position.y
 	var distance := target_point.x - weapon_position.global_position.x
@@ -335,7 +336,7 @@ func _on_grounded_timer_timeout() -> void:
 func _on_throw_knife_timer_timeout() -> void:
 	can_throw_knife = true
 	
-func set_health(health: int, emit_signal: bool = true) -> void:
+func set_health(health: int, is_emit_signal: bool = true) -> void:
 	current_health = clamp(health, 0 , max_health)
-	if emit_signal:
+	if is_emit_signal:
 		DamageManager.health_change.emit(type, current_health, max_health)
