@@ -1,0 +1,17 @@
+[gd_scene format=3 uid="uid://c7ibnahou6mi4"]
+
+[ext_resource type="Theme" uid="uid://dlbqbcwpyflo1" path="res://gui_theme.tres" id="1_2ugcy"]
+[ext_resource type="Script" uid="uid://bcjlkrsu2x14i" path="res://scenes/ui/controls/activable_control.gd" id="1_yx2dg"]
+
+[node name="ActivableControl" type="HBoxContainer" unique_id=419456193]
+theme_override_constants/separation = 0
+script = ExtResource("1_yx2dg")
+color_default = Color(0.4392157, 0.4392157, 0.4392157, 1)
+color_active = Color(0.8156863, 0.8156863, 0, 1)
+
+[node name="Label" type="Label" parent="." unique_id=556266040]
+custom_minimum_size = Vector2(30, 0)
+layout_mode = 2
+theme = ExtResource("1_2ugcy")
+theme_override_colors/font_color = Color(1, 1, 1, 1)
+text = "OPTION"
