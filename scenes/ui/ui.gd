@@ -1,6 +1,8 @@
 class_name UI
 extends CanvasLayer
 
+const OPTIONS_SCREEN_PREFAB := preload("res://scenes/ui/options_screen.tscn")
+
 @onready var player_health_bar: Healthbar = $UIContainer/PlayerHealthBar
 @onready var enemy_avatar: TextureRect = $UIContainer/EnemyAvatar
 @onready var enemy_health_bar: Healthbar = $UIContainer/EnemyHealthBar
@@ -10,6 +12,7 @@ extends CanvasLayer
 
 @export var duration_healthbar_visible: int
 
+var options_screen : OptionsScreen = null
 var time_start_healthbar_visible: int
 
 const avatar_map : Dictionary = {
@@ -35,6 +38,21 @@ func _process(_delta: float) -> void:
 	if enemy_health_bar.visible and (Time.get_ticks_msec() - time_start_healthbar_visible > duration_healthbar_visible):
 		enemy_avatar.visible = false
 		enemy_health_bar.visible = false
+	handle_input()
+	
+func handle_input() -> void:
+	if Input.is_action_just_pressed("ui_cancel"):
+		if options_screen == null:
+			options_screen = OPTIONS_SCREEN_PREFAB.instantiate()
+			options_screen.exit.connect(unpause)
+			add_child(options_screen)
+			get_tree().paused = true
+		else:
+			unpause()
+			
+func unpause() -> void:
+	options_screen.queue_free()
+	get_tree().paused = false
 	
 func on_character_health_change(type: Character.Type, current_health: int, max_health: int) -> void:
 	if type == Character.Type.PLAYER:

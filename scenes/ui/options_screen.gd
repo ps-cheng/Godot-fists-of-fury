@@ -1,14 +1,23 @@
 class_name OptionsScreen
 extends Control
 
-@onready var music_volume: ActivableControl = $Background/MarginContainer/VBoxContainer/MusicVolume
-@onready var sound_volume: ActivableControl = $Background/MarginContainer/VBoxContainer/SoundVolume
-@onready var shake_toggle: ActivableControl = $Background/MarginContainer/VBoxContainer/ShakeToggle
-@onready var return_button: ActivableControl = $Background/MarginContainer/VBoxContainer/ReturnButton
+signal exit
+
+@onready var music_volume: RangePicker = $Background/MarginContainer/VBoxContainer/MusicVolume
+@onready var sound_volume: RangePicker = $Background/MarginContainer/VBoxContainer/SoundVolume
+@onready var shake_toggle: TogglePicker = $Background/MarginContainer/VBoxContainer/ShakeToggle
+@onready var return_button: LabelPicker = $Background/MarginContainer/VBoxContainer/ReturnButton
 @onready var activables : Array[ActivableControl] = [music_volume, sound_volume, shake_toggle, return_button]
 var current_selection_index := 0
 
 func _ready() -> void:
+	music_volume.set_value(OptionsManager.music_volume)
+	sound_volume.set_value(OptionsManager.sfx_volume)
+	shake_toggle.set_value(OptionsManager.is_screenshake_enabled as int)
+	music_volume.value_change.connect(on_music_volume_change.bind())
+	sound_volume.value_change.connect(on_sound_volume_change.bind())
+	shake_toggle.value_change.connect(on_shake_toggle_change.bind())
+	return_button.pressReturn.connect(on_return_press.bind())
 	refresh()
 
 func refresh() -> void:
@@ -22,6 +31,21 @@ func handle_input() -> void:
 	if Input.is_action_just_pressed("ui_down"):
 		current_selection_index = clamp(current_selection_index + 1, 0, activables.size() - 1)
 		refresh()
+		SoundPlayer.play(SoundManager.Sound.CLICK)
 	if Input.is_action_just_pressed("ui_up"):
 		current_selection_index = clamp(current_selection_index - 1, 0, activables.size() - 1)
 		refresh()
+		SoundPlayer.play(SoundManager.Sound.CLICK)
+		
+func on_music_volume_change(value: int) -> void:
+	OptionsManager.set_music_volume(value)
+
+func on_sound_volume_change(value: int) -> void:
+	OptionsManager.set_sfx_volume(value)
+	SoundPlayer.play(SoundManager.Sound.HIT1)
+	
+func on_shake_toggle_change(value: int) -> void:
+	OptionsManager.set_screenshake(value == 1)
+
+func on_return_press() -> void:
+	exit.emit()

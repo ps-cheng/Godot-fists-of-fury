@@ -27,6 +27,7 @@ DamageManager="*uid://cptcwg37k6k4p"
 ComboManager="*uid://clm8rqhebaguv"
 MusicPlayer="*uid://scmhmw1br8og"
 SoundPlayer="*uid://cgkawlk03xt6b"
+OptionsManager="*uid://dy8btswf3s2mp"
 
 [debug]
 
