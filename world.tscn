@@ -54,6 +54,7 @@ player = NodePath("Player")
 
 [node name="Player" parent="ActorsContainer" unique_id=944540033 instance=ExtResource("2_fj7yv")]
 position = Vector2(47, 47)
+max_health = 1
 knockback_intensity = 10.0
 knockdown_intensity = 70.0
 has_knife = false
@@ -61,3 +62,4 @@ has_knife = false
 [editable path="Stage-01-Streets"]
 [editable path="Stage-01-Streets/Checkpoints/Checkpoint"]
 [editable path="Stage-01-Streets/Checkpoints/Checkpoint2"]
+[editable path="Stage-01-Streets/Checkpoints/Checkpoint3"]

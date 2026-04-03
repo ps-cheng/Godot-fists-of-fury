@@ -1,6 +1,7 @@
 class_name UI
 extends CanvasLayer
 
+const DEATH_SCREEN_PREFAB := preload("res://scenes/ui/death_screen.tscn")
 const OPTIONS_SCREEN_PREFAB := preload("res://scenes/ui/options_screen.tscn")
 
 @onready var player_health_bar: Healthbar = $UIContainer/PlayerHealthBar
@@ -12,6 +13,7 @@ const OPTIONS_SCREEN_PREFAB := preload("res://scenes/ui/options_screen.tscn")
 
 @export var duration_healthbar_visible: int
 
+var death_screen: DeathScreen = null
 var options_screen : OptionsScreen = null
 var time_start_healthbar_visible: int
 
@@ -57,6 +59,9 @@ func unpause() -> void:
 func on_character_health_change(type: Character.Type, current_health: int, max_health: int) -> void:
 	if type == Character.Type.PLAYER:
 		player_health_bar.refresh(current_health, max_health)
+		if current_health == 0 and death_screen == null:
+			death_screen = DEATH_SCREEN_PREFAB.instantiate()
+			add_child(death_screen)
 	else:
 		time_start_healthbar_visible = Time.get_ticks_msec()
 		enemy_avatar.texture = avatar_map[type]
