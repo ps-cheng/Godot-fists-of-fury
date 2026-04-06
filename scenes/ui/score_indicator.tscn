@@ -10,3 +10,4 @@ theme = ExtResource("1_p3m8a")
 text = "100"
 script = ExtResource("2_8t32t")
 duration_score_update = 300.0
+points_per_life = 1000
