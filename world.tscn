@@ -2,10 +2,8 @@
 
 [ext_resource type="Script" uid="uid://c0ctoo227jjd2" path="res://world.gd" id="1_tlwt5"]
 [ext_resource type="PackedScene" uid="uid://cfpjbw4yc61w3" path="res://scenes/ui/ui.tscn" id="2_036b0"]
-[ext_resource type="PackedScene" uid="uid://25wfy4npumw6" path="res://scenes/characters/player.tscn" id="2_fj7yv"]
 [ext_resource type="Script" uid="uid://b0mrjiuguysmr" path="res://scenes/stage/actors_container.gd" id="3_gbfbk"]
 [ext_resource type="Script" uid="uid://cncdvjihhwmcp" path="res://scenes/stage/camera.gd" id="4_dwbse"]
-[ext_resource type="PackedScene" uid="uid://cng8r6qdij13s" path="res://scenes/stage/stage_01_streets.tscn" id="5_dwbse"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_tlwt5"]
 size = Vector2(6, 64)
@@ -16,7 +14,7 @@ script = ExtResource("1_tlwt5")
 [node name="UI" parent="." unique_id=1394759295 instance=ExtResource("2_036b0")]
 process_mode = 3
 
-[node name="Stage-01-Streets" parent="." unique_id=1132328735 instance=ExtResource("5_dwbse")]
+[node name="StageContainer" type="Node2D" parent="." unique_id=1090104247]
 
 [node name="Camera" type="Camera2D" parent="." unique_id=1625539590]
 position = Vector2(50, 32)
@@ -47,18 +45,6 @@ sync_to_physics = false
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Camera/InvisibleWalls/RightWall" unique_id=910318761]
 shape = SubResource("RectangleShape2D_tlwt5")
 
-[node name="ActorsContainer" type="Node2D" parent="." unique_id=2049294413 node_paths=PackedStringArray("player")]
+[node name="ActorsContainer" type="Node2D" parent="." unique_id=2049294413]
 y_sort_enabled = true
 script = ExtResource("3_gbfbk")
-player = NodePath("Player")
-
-[node name="Player" parent="ActorsContainer" unique_id=944540033 instance=ExtResource("2_fj7yv")]
-position = Vector2(47, 47)
-knockback_intensity = 10.0
-knockdown_intensity = 70.0
-has_knife = false
-
-[editable path="Stage-01-Streets"]
-[editable path="Stage-01-Streets/Checkpoints/Checkpoint"]
-[editable path="Stage-01-Streets/Checkpoints/Checkpoint2"]
-[editable path="Stage-01-Streets/Checkpoints/Checkpoint3"]

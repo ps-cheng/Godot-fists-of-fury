@@ -78,5 +78,5 @@ func on_game_over() -> void:
 		game_over_screen.set_score(score_indicator.real_score)
 		add_child(game_over_screen)
 		
-func on_checkpoint_complete() -> void:
+func on_checkpoint_complete(_checkpoint: Checkpoint) -> void:
 	go_indicator.start_flickering()

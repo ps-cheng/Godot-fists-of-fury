@@ -917,7 +917,6 @@ speed = 35.0
 autodestroy_on_drop = true
 damage_gunshot = 8
 damage_power = 6
-has_knife = true
 max_ammo_per_gun = 3
 
 [node name="CharacterSprite" parent="." index="1" unique_id=1895011757]
