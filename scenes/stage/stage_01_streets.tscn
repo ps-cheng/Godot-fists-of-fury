@@ -129,7 +129,7 @@ position = Vector2(330, 0)
 nb_simultaneous_enemies = 3
 
 [node name="IgorBoss" parent="Checkpoints/Checkpoint3/Enemies" parent_id_path=PackedInt32Array(1776037780, 1401944699) index="0" unique_id=1988070691 instance=ExtResource("10_5hqmy")]
-position = Vector2(118, 51)
+position = Vector2(109, 62)
 
 [node name="Barrel" parent="Containers" parent_id_path=PackedInt32Array(149319910) index="0" unique_id=711337127 instance=ExtResource("7_2j5k0")]
 position = Vector2(315, 47)
@@ -178,7 +178,7 @@ texture = ExtResource("14_5dxgg")
 centered = false
 
 [node name="PlayerSpawnLocation" parent="." index="6" unique_id=1028698233]
-position = Vector2(358, 51)
+position = Vector2(43, 54)
 
 [editable path="Checkpoints/Checkpoint"]
 [editable path="Checkpoints/Checkpoint2"]
