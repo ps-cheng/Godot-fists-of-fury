@@ -1,0 +1,60 @@
+[gd_scene format=3 uid="uid://bg0ykw06410dg"]
+
+[ext_resource type="Script" uid="uid://b8lqyt8qfw5ps" path="res://scenes/ui/dialogue_box.gd" id="1_6iboe"]
+[ext_resource type="Theme" uid="uid://dlbqbcwpyflo1" path="res://gui_theme.tres" id="1_xg44k"]
+
+[node name="DialogueBox" type="CanvasLayer" unique_id=288396527]
+script = ExtResource("1_6iboe")
+
+[node name="Border" type="ColorRect" parent="." unique_id=1643114016]
+offset_left = 10.0
+offset_top = 35.0
+offset_right = 90.0
+offset_bottom = 59.0
+color = Color(0.53333336, 0.53333336, 0.53333336, 1)
+
+[node name="MarginContainer" type="MarginContainer" parent="Border" unique_id=1428926411]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/margin_left = 1
+theme_override_constants/margin_top = 1
+theme_override_constants/margin_right = 1
+theme_override_constants/margin_bottom = 1
+
+[node name="Contents" type="ColorRect" parent="Border/MarginContainer" unique_id=1626582453]
+layout_mode = 2
+color = Color(0.078431375, 0.078431375, 0.078431375, 1)
+
+[node name="MarginContainer" type="MarginContainer" parent="Border/MarginContainer/Contents" unique_id=491940374]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/margin_left = 3
+theme_override_constants/margin_top = 0
+theme_override_constants/margin_right = 0
+theme_override_constants/margin_bottom = 0
+
+[node name="VBoxContainer" type="VBoxContainer" parent="Border/MarginContainer/Contents/MarginContainer" unique_id=1566302226]
+layout_mode = 2
+theme_override_constants/separation = 2
+alignment = 1
+
+[node name="Label" type="Label" parent="Border/MarginContainer/Contents/MarginContainer/VBoxContainer" unique_id=1218939260]
+layout_mode = 2
+theme = ExtResource("1_xg44k")
+theme_override_font_sizes/font_size = 5
+text = "Igor"
+
+[node name="DialogueLabel" type="Label" parent="Border/MarginContainer/Contents/MarginContainer/VBoxContainer" unique_id=1302657359]
+layout_mode = 2
+theme = ExtResource("1_xg44k")
+theme_override_colors/font_color = Color(0.8, 0.8, 0.8, 1)
+theme_override_constants/line_spacing = 0
+theme_override_font_sizes/font_size = 4

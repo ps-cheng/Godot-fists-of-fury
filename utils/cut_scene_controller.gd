@@ -1,5 +1,7 @@
 class_name CutSceneController
-extends Node2D
+extends Node
+
+@onready var dialogue_box: DialogueBox = $DialogueBox
 
 var player: Player
 var boss: Character
@@ -8,14 +10,14 @@ var is_started := false
 func set_player(playerRef):
 	player = playerRef
 	print("set player")
-	_try_start()
+	try_start()
 	
 func set_boss(bossRef):
 	boss = bossRef
 	print("set boss")
-	_try_start()
+	try_start()
 
-func _try_start():
+func try_start():
 	if is_started:
 		return
 	if player != null and boss != null:
@@ -24,17 +26,17 @@ func _try_start():
 		start_cutscene()
 
 func start_cutscene():	
-	await _lock_player()
-	await _boss_entry()
-	await _dialogue()
-	await _finish()
+	await lock_player()
+	await boss_entry()
+	await dialogue()
+	await finish()
 
-func _lock_player():
+func lock_player():
 	player.set_process(false)
 	player.set_physics_process(false)
 	print("lock player")
 
-func _boss_entry():
+func boss_entry():
 	# simple example
 	print("boss entry")
 	var target_x = 400
@@ -42,12 +44,13 @@ func _boss_entry():
 		boss.position.x -= 120 * get_process_delta_time()
 		await get_tree().process_frame
 
-func _dialogue():
-	# placeholder for now
-	await get_tree().create_timer(10.0).timeout
+func dialogue():
+	print("dialogue")
+	dialogue_box.start_dialogue()
+	await EntityManager.dialogue_finished
 	print("dialogue")
 
-func _finish():
+func finish():
 	player.set_process(true)
 	player.set_physics_process(true)
 	boss.set_process(true)

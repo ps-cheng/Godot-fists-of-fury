@@ -38,12 +38,12 @@ func on_enemy_death(_enemy: Character) -> void:
 		queue_free()
 
 func on_player_enter(player: Player) -> void:
-	if cutscene_controller != null:
-		cutscene_controller.set_player(player)
 	if not is_activated:
 		StageManager.checkpoint_start.emit()
 		active_enemy_counter = 0
 		is_activated = true
+		if cutscene_controller != null:
+			cutscene_controller.set_player(player)
 		
 func on_boss_spawned(boss: Character) -> void:
 	if cutscene_controller != null:
