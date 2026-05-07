@@ -185,7 +185,7 @@ size = Vector2(6, 6)
 [node name="IgorBoss" unique_id=911919632 instance=ExtResource("1_s2yea")]
 collision_layer = 4
 script = ExtResource("2_thh5s")
-distance_from_player = 30
+distance_from_player = 40
 duration_between_attacks = 2000
 duration_vulnerable = 2000
 damage = 5

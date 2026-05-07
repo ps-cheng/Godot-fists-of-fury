@@ -18,9 +18,12 @@ func end_dialogue():
 func refresh() -> void:
 	dialogue_label.text = lines[current_line]
 
-func handle_input():
-	if current_line >= lines.size():
-		end_dialogue()
-	elif (Input.is_action_just_pressed("attack") or Input.is_action_just_pressed("jump")):
+func _unhandled_input(event: InputEvent) -> void:
+	if not visible:
+		return
+	if event.is_action_pressed("attack") or event.is_action_pressed("jump"):
 		current_line += 1
-		refresh()
+		if current_line >= lines.size():
+			end_dialogue()
+		else:
+			refresh()
