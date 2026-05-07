@@ -2,6 +2,7 @@ class_name Checkpoint
 extends Node2D
 
 @export var nb_simultaneous_enemies : int
+@export var cutscene_controller : CutSceneController
 
 @onready var enemies: Node2D = $Enemies
 @onready var player_detection_area: Area2D = $PlayerDetectionArea
@@ -13,6 +14,8 @@ var is_activated := false
 func _ready() -> void:
 	player_detection_area.body_entered.connect(on_player_enter.bind())
 	EntityManager.death_enemy.connect(on_enemy_death.bind())
+	if cutscene_controller != null:
+		EntityManager.boss_spawned.connect(on_boss_spawned.bind())
 		
 func _process(_delta: float) -> void:
 	if is_activated and can_spawn_enemies():
@@ -34,8 +37,14 @@ func on_enemy_death(_enemy: Character) -> void:
 		StageManager.checkpoint_complete.emit(self)
 		queue_free()
 
-func on_player_enter(_player: Player) -> void:
+func on_player_enter(player: Player) -> void:
+	if cutscene_controller != null:
+		cutscene_controller.set_player(player)
 	if not is_activated:
 		StageManager.checkpoint_start.emit()
 		active_enemy_counter = 0
 		is_activated = true
+		
+func on_boss_spawned(boss: Character) -> void:
+	if cutscene_controller != null:
+		cutscene_controller.set_boss(boss)

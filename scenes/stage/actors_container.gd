@@ -51,6 +51,7 @@ func on_spawn_enemy(enemy_data: EnemyData) -> void:
 	if enemy_data.door_index > -1:
 		enemy.assign_door(doors[enemy_data.door_index])
 	add_child(enemy)
+	EntityManager.boss_spawned.emit(enemy)
 	
 func on_orphan_actor(orphan: Node2D) -> void:
 	if orphan is Door:
