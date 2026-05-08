@@ -42,8 +42,10 @@ func lock_player() -> void:
 	player.set_physics_process(false)
 
 func boss_entry() -> void:
-	while(boss.position.distance_to(player.position) > boss.distance_from_player):
+	boss.projectile_aim.enabled = false
+	while not boss.is_player_within_range():
 		await get_tree().process_frame
+	boss.projectile_aim.enabled = true
 	boss.set_process(false)
 	boss.set_physics_process(false)
 	
