@@ -7,6 +7,29 @@
 script = ExtResource("1_oa4rg")
 
 [node name="DialogueBox" parent="." unique_id=1792231143 instance=ExtResource("2_f0xnk")]
+
+[node name="Label" parent="DialogueBox/Border/MarginContainer/Contents/MarginContainer/VBoxContainer" parent_id_path=PackedInt32Array(1792231143, 1566302226) index="0" unique_id=1218939260]
+theme_override_font_sizes/font_size = 4
+
+[node name="DialogueLabel" parent="DialogueBox/Border/MarginContainer/Contents/MarginContainer/VBoxContainer" parent_id_path=PackedInt32Array(1792231143, 1566302226) index="1" unique_id=1302657359]
+theme_override_font_sizes/font_size = 4
+
+[node name="CinematicBars" type="CanvasLayer" parent="." unique_id=452058328]
+
+[node name="TopBar" type="ColorRect" parent="CinematicBars" unique_id=408760405]
 visible = false
+offset_right = 100.0
+offset_bottom = 8.0
+color = Color(0, 0, 0, 1)
+
+[node name="BottomBar" type="ColorRect" parent="CinematicBars" unique_id=743206099]
+visible = false
+anchors_preset = 2
+anchor_top = 1.0
+anchor_bottom = 1.0
+offset_top = -8.0
+offset_right = 100.0
+grow_vertical = 0
+color = Color(0, 0, 0, 1)
 
 [editable path="DialogueBox"]

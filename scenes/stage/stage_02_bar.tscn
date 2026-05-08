@@ -48,10 +48,11 @@ cutscene_controller = NodePath("CutSceneController")
 [node name="CutSceneController" parent="Checkpoints/Checkpoint2" index="0" unique_id=1168341462 instance=ExtResource("5_c4j3w")]
 
 [node name="DialogueBox" parent="Checkpoints/Checkpoint2/CutSceneController" index="0" unique_id=1792231143]
-lines = Array[String](["Wait...", "You are not getting away\\nwith this..."])
+visible = false
+lines = Array[String](["Wait...", "You are not getting away..."])
 
 [node name="IgorBoss" parent="Checkpoints/Checkpoint2/Enemies" parent_id_path=PackedInt32Array(713230248, 1401944699) index="0" unique_id=1675441356 instance=ExtResource("5_hsnae")]
-position = Vector2(-72, 51)
+position = Vector2(-51, 50)
 damage = 8
 max_health = 70
 
