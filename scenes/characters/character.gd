@@ -335,6 +335,10 @@ func on_emit_collateral_damage(receiver: DamageReceiver) -> void:
 		receiver.damage_received.emit(0, direction, DamageReceiver.HitType.KNOCKDOWN)
 	
 func on_wall_hit(_wall: AnimatableBody2D) -> void:
+	var cam := get_viewport().get_camera_2d()
+	var side : int = sign(global_position.x - cam.global_position.x)
+	if side == 0 or sign(velocity.x) != side:
+		return
 	state = State.FALL
 	height_speed = knockdown_intensity
 	velocity = -velocity / 2.0

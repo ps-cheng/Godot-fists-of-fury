@@ -53,7 +53,7 @@ lines = Array[String](["Wait...", "You are not getting away..."])
 
 [node name="IgorBoss" parent="Checkpoints/Checkpoint2/Enemies" parent_id_path=PackedInt32Array(713230248, 1401944699) index="0" unique_id=1675441356 instance=ExtResource("5_hsnae")]
 position = Vector2(-51, 50)
-damage = 8
+damage = 10
 max_health = 70
 
 [node name="PlayerSpawnLocation" parent="." index="6" unique_id=1028698233]
