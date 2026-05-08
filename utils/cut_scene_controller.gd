@@ -32,34 +32,33 @@ func try_start() -> void:
 func start_cutscene() -> void:
 	camera = get_viewport().get_camera_2d()
 	await lock_player()
-	await boss_entry()
 	await cinematic_start()
+	await boss_entry()
 	await dialogue()
 	await finish()
 
 func lock_player() -> void:
 	player.set_process(false)
 	player.set_physics_process(false)
-
-func boss_entry() -> void:
-	boss.projectile_aim.enabled = false
-	while not boss.is_player_within_range():
-		await get_tree().process_frame
-	boss.projectile_aim.enabled = true
-	boss.set_process(false)
-	boss.set_physics_process(false)
 	
 func cinematic_start() -> void:
-	var midpoint = (player.position.x + boss.position.x) / 2.0
 	top_bar.visible = true
 	bottom_bar.visible = true
 	EntityManager.cutscene_started.emit()
 	var tween = create_tween().set_parallel()
 	tween.tween_property(top_bar, "position:y", 0.0, 0.3).from(-8.0)
 	tween.tween_property(bottom_bar, "position:y", 56.0, 0.3).from(64.0)
-	tween.tween_property(camera, "position:x", midpoint, 0.5)
-	tween.tween_property(camera, "position:y", 38.0, 0.5)
 	await tween.finished
+
+func boss_entry() -> void:
+	boss.projectile_aim.enabled = false
+	while not boss.is_player_within_range():
+		camera.position.x = (player.position.x + boss.position.x) / 2.0
+		await get_tree().process_frame
+	camera.position.x = (player.position.x + boss.position.x) / 2.0
+	boss.projectile_aim.enabled = true
+	boss.set_process(false)
+	boss.set_physics_process(false)
 	
 func dialogue() -> void:
 	dialogue_box.start_dialogue()
