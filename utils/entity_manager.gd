@@ -1,6 +1,8 @@
 extends Node
 
 signal boss_spawned(enemy: Character)
+signal cutscene_started()
+signal cutscene_finished()
 signal death_enemy(enemy: Character)
 signal dialogue_finished()
 signal orphan_actor(orphan : Node2D)

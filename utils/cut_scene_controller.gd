@@ -51,6 +51,7 @@ func cinematic_start() -> void:
 	var midpoint = (player.position.x + boss.position.x) / 2.0
 	top_bar.visible = true
 	bottom_bar.visible = true
+	EntityManager.cutscene_started.emit()
 	var tween = create_tween().set_parallel()
 	tween.tween_property(top_bar, "position:y", 0.0, 0.3).from(-8.0)
 	tween.tween_property(bottom_bar, "position:y", 56.0, 0.3).from(64.0)
@@ -69,6 +70,7 @@ func finish() -> void:
 	tween.tween_property(camera, "position:x", player.position.x, 0.5)
 	tween.tween_property(camera, "position:y", 32.0, 0.5)
 	await tween.finished
+	EntityManager.cutscene_finished.emit()
 	top_bar.visible = false
 	bottom_bar.visible = false
 	player.set_process(true)

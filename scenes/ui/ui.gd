@@ -5,6 +5,7 @@ const DEATH_SCREEN_PREFAB := preload("res://scenes/ui/death_screen.tscn")
 const GAME_OVER_PREFAB := preload("res://scenes/ui/game_over_screen.tscn")
 const OPTIONS_SCREEN_PREFAB := preload("res://scenes/ui/options_screen.tscn")
 
+@onready var ui_container: Control = $UIContainer
 @onready var player_health_bar: Healthbar = $UIContainer/PlayerHealthBar
 @onready var enemy_avatar: TextureRect = $UIContainer/EnemyAvatar
 @onready var enemy_health_bar: Healthbar = $UIContainer/EnemyHealthBar
@@ -31,6 +32,8 @@ func _init() -> void:
 	DamageManager.health_change.connect(on_character_health_change.bind())
 	StageManager.checkpoint_complete.connect(on_checkpoint_complete.bind())
 	StageManager.stage_complete.connect(on_stage_complete.bind())
+	EntityManager.cutscene_started.connect(on_cutscene_started.bind())
+	EntityManager.cutscene_finished.connect(on_cutscene_finished.bind())
 	
 func _ready() -> void:
 	enemy_avatar.visible = false
@@ -85,3 +88,9 @@ func on_checkpoint_complete(_checkpoint: Checkpoint) -> void:
 
 func on_stage_complete() -> void:
 	stage_transition.start_transition()
+	
+func on_cutscene_started() -> void:
+	ui_container.visible = false
+
+func on_cutscene_finished() -> void:
+	ui_container.visible = true
