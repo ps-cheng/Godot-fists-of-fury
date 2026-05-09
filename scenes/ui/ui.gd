@@ -2,6 +2,7 @@ class_name UI
 extends CanvasLayer
 
 const DEATH_SCREEN_PREFAB := preload("res://scenes/ui/death_screen.tscn")
+const GAME_CLEAR_PREFAB := preload("res://scenes/ui/game_clear_screen.tscn")
 const GAME_OVER_PREFAB := preload("res://scenes/ui/game_over_screen.tscn")
 const OPTIONS_SCREEN_PREFAB := preload("res://scenes/ui/options_screen.tscn")
 
@@ -17,6 +18,7 @@ const OPTIONS_SCREEN_PREFAB := preload("res://scenes/ui/options_screen.tscn")
 @export var duration_healthbar_visible: int
 
 var death_screen : DeathScreen = null
+var game_clear_screen : GameClearScreen = null
 var game_over_screen : GameOverScreen = null
 var options_screen : OptionsScreen = null
 var time_start_healthbar_visible: int
@@ -32,6 +34,7 @@ func _init() -> void:
 	DamageManager.health_change.connect(on_character_health_change.bind())
 	StageManager.checkpoint_complete.connect(on_checkpoint_complete.bind())
 	StageManager.stage_complete.connect(on_stage_complete.bind())
+	StageManager.game_clear.connect(on_game_clear.bind())
 	EntityManager.cutscene_started.connect(on_cutscene_started.bind())
 	EntityManager.cutscene_finished.connect(on_cutscene_finished.bind())
 	
@@ -94,3 +97,9 @@ func on_cutscene_started() -> void:
 
 func on_cutscene_finished() -> void:
 	ui_container.visible = true
+	
+func on_game_clear() -> void:
+	if game_clear_screen == null:
+		game_clear_screen = GAME_CLEAR_PREFAB.instantiate()
+		game_clear_screen.set_score(score_indicator.real_score)
+		add_child(game_clear_screen)

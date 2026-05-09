@@ -2,7 +2,10 @@
   "permissions": {
     "allow": [
       "Bash(Get-ChildItem -Path \"D:\\\\Godot\\\\Godot-fists-of-fury\" -Recurse)",
-      "Bash(Select-Object FullName)"
+      "Bash(Select-Object FullName)",
+      "Bash(xargs grep -l \"game_over_screen\\\\|GameOverScreen\")",
+      "Bash(xargs grep -l \"reload_current_scene\\\\|change_scene\\\\|get_tree\\\\|restart\")",
+      "Bash(xargs grep -l \"_input\\\\|Input\\\\|pressed\\\\|on_game_over\")"
     ]
   }
 }

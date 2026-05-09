@@ -48,6 +48,8 @@ func load_next_stage() -> void:
 		for actor in actors_container.get_children():
 			actor.queue_free()
 		is_stage_ready_for_loading = true
+	else:
+		StageManager.game_clear.emit()
 
 func on_checkpoint_start() -> void:
 	is_camera_locked = true
