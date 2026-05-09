@@ -1,8 +1,10 @@
 class_name GameOverScreen
 extends Control
 
-@onready var score_indicator: ScoreIndicator = $Background/MarginContainer/VBoxContainer/HBoxContainer/ScoreIndicator
+@onready var score_indicator: ScoreIndicator = $Background/MarginContainer/VBoxContainer/Score/ScoreIndicator
 @onready var timer: Timer = $Timer
+@onready var restart_button: Button = $Background/MarginContainer/VBoxContainer/Buttons/RestartButton
+@onready var end_button: Button = $Background/MarginContainer/VBoxContainer/Buttons/EndButton
 
 var total_score := 0
 
@@ -14,3 +16,9 @@ func set_score(score: int) -> void:
 	
 func on_timer_timeout() -> void:
 	score_indicator.add_points(total_score)
+
+func on_restart() -> void:
+	get_tree().reload_current_scene()
+
+func on_end() -> void:
+	get_tree().quit()

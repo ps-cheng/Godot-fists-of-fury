@@ -40,7 +40,6 @@ layout_mode = 2
 [node name="Label" type="Label" parent="Background/MarginContainer/VBoxContainer" unique_id=1559198445]
 layout_mode = 2
 theme = ExtResource("1_056sd")
-theme_override_colors/font_color = Color(0.8156863, 0, 0, 1)
 theme_override_font_sizes/font_size = 10
 text = "GAME CLEARED!"
 horizontal_alignment = 1

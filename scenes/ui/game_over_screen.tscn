@@ -45,16 +45,31 @@ theme_override_font_sizes/font_size = 12
 text = "GAME OVER"
 horizontal_alignment = 1
 
-[node name="HBoxContainer" type="HBoxContainer" parent="Background/MarginContainer/VBoxContainer" unique_id=56442440]
+[node name="Score" type="HBoxContainer" parent="Background/MarginContainer/VBoxContainer" unique_id=56442440]
 layout_mode = 2
+alignment = 1
 
-[node name="Label" type="Label" parent="Background/MarginContainer/VBoxContainer/HBoxContainer" unique_id=2123216015]
+[node name="Label" type="Label" parent="Background/MarginContainer/VBoxContainer/Score" unique_id=2123216015]
 layout_mode = 2
 theme = ExtResource("1_dnrai")
 text = "SCORE:"
 
-[node name="ScoreIndicator" parent="Background/MarginContainer/VBoxContainer/HBoxContainer" unique_id=446178870 instance=ExtResource("2_sopbp")]
+[node name="ScoreIndicator" parent="Background/MarginContainer/VBoxContainer/Score" unique_id=446178870 instance=ExtResource("2_sopbp")]
 layout_mode = 2
+
+[node name="Buttons" type="HBoxContainer" parent="Background/MarginContainer/VBoxContainer" unique_id=492467585]
+layout_mode = 2
+alignment = 1
+
+[node name="RestartButton" type="Button" parent="Background/MarginContainer/VBoxContainer/Buttons" unique_id=983738746]
+layout_mode = 2
+theme = ExtResource("1_dnrai")
+text = "RESTART"
+
+[node name="EndButton" type="Button" parent="Background/MarginContainer/VBoxContainer/Buttons" unique_id=136832100]
+layout_mode = 2
+theme = ExtResource("1_dnrai")
+text = "END GAME"
 
 [node name="Timer" type="Timer" parent="." unique_id=1515950308]
 wait_time = 2.0
