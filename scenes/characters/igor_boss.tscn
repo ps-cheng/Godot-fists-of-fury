@@ -218,7 +218,7 @@ autoplay = &"idle"
 collision_mask = 16
 
 [node name="CollisionShape2D" parent="DamageEmitter" index="0" unique_id=496274900]
-position = Vector2(9, -9)
+position = Vector2(9, -15)
 shape = SubResource("RectangleShape2D_jtjl3")
 
 [node name="DamageReceiver" parent="." index="5" unique_id=1693704388]
