@@ -33,7 +33,6 @@ const avatar_map : Dictionary = {
 func _init() -> void:
 	DamageManager.health_change.connect(on_character_health_change.bind())
 	StageManager.checkpoint_complete.connect(on_checkpoint_complete.bind())
-	StageManager.stage_exit_complete.connect(on_stage_complete.bind())
 	StageManager.game_clear.connect(on_game_clear.bind())
 	EntityManager.cutscene_started.connect(on_cutscene_started.bind())
 	EntityManager.cutscene_finished.connect(on_cutscene_finished.bind())
@@ -88,9 +87,6 @@ func on_game_over() -> void:
 		
 func on_checkpoint_complete(_checkpoint: Checkpoint) -> void:
 	go_indicator.start_flickering()
-
-func on_stage_complete() -> void:
-	stage_transition.start_transition()
 	
 func on_cutscene_started() -> void:
 	ui_container.visible = false

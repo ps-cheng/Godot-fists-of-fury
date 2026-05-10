@@ -16,7 +16,7 @@ func _ready() -> void:
 	refresh()
 
 func add_combo(points: int) -> void:
-	add_points(points * (points + 1) / 2.0)
+	add_points(int(points * (points + 1) / 2.0))
 
 func start_update() -> void:
 	prior_score = displayed_score

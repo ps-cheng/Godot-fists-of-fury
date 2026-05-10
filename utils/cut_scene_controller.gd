@@ -30,7 +30,7 @@ func try_start() -> void:
 
 func start_cutscene() -> void:
 	camera = get_viewport().get_camera_2d()
-	await lock_player()
+	lock_player()
 	await cinematic_start()
 	await boss_entry()
 	await dialogue()

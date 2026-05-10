@@ -46,7 +46,7 @@ func _process(_delta: float) -> void:
 	if is_player_exiting and player != null:
 		if player.position.x > camera.position.x + get_viewport_rect().size.x/2 + 10:
 			is_player_exiting = false
-			StageManager.stage_exit_complete.emit()
+			stage_transition.start_transition()
 
 func load_next_stage() -> void:
 	current_stage_index += 1
