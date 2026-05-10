@@ -14,6 +14,7 @@ const OPTIONS_SCREEN_PREFAB := preload("res://scenes/ui/options_screen.tscn")
 @onready var combo_indicator: ComboIndicator = $UIContainer/ComboIndicator
 @onready var score_indicator: ScoreIndicator = $UIContainer/ScoreIndicator
 @onready var stage_transition: StageTransition = $UIContainer/StageTransition
+@onready var cinematic_bars: CinematicBars = $UIContainer/CinematicBars
 
 @export var duration_healthbar_visible: int
 
@@ -34,6 +35,7 @@ func _init() -> void:
 	DamageManager.health_change.connect(on_character_health_change.bind())
 	StageManager.checkpoint_complete.connect(on_checkpoint_complete.bind())
 	StageManager.game_clear.connect(on_game_clear.bind())
+	StageManager.stage_complete.connect(on_stage_complete.bind())
 	EntityManager.cutscene_started.connect(on_cutscene_started.bind())
 	EntityManager.cutscene_finished.connect(on_cutscene_finished.bind())
 	
@@ -99,3 +101,7 @@ func on_game_clear() -> void:
 		game_clear_screen = GAME_CLEAR_PREFAB.instantiate()
 		game_clear_screen.set_score(score_indicator.real_score)
 		add_child(game_clear_screen)
+	
+func on_stage_complete() -> void:	
+	ui_container.visible = false
+	cinematic_bars.animate_in()

@@ -1,7 +1,8 @@
 [gd_scene format=3 uid="uid://dm2jf15umswav"]
 
-[ext_resource type="Script" uid="uid://dijkmlukmqqnk" path="res://utils/cut_scene_controller.gd" id="1_oa4rg"]
+[ext_resource type="Script" uid="uid://dijkmlukmqqnk" path="res://scenes/stage/cut_scene_controller.gd" id="1_oa4rg"]
 [ext_resource type="PackedScene" uid="uid://bg0ykw06410dg" path="res://scenes/ui/dialogue_box.tscn" id="2_f0xnk"]
+[ext_resource type="PackedScene" uid="uid://x7sp15pfvksa" path="res://scenes/ui/cinematic_bars.tscn" id="3_h2idm"]
 
 [node name="CutSceneController" type="Node2D" unique_id=1168341462]
 script = ExtResource("1_oa4rg")
@@ -14,22 +15,6 @@ theme_override_font_sizes/font_size = 4
 [node name="DialogueLabel" parent="DialogueBox/Border/MarginContainer/Contents/MarginContainer/VBoxContainer" parent_id_path=PackedInt32Array(1792231143, 1566302226) index="1" unique_id=1302657359]
 theme_override_font_sizes/font_size = 4
 
-[node name="CinematicBars" type="CanvasLayer" parent="." unique_id=452058328]
-
-[node name="TopBar" type="ColorRect" parent="CinematicBars" unique_id=408760405]
-visible = false
-offset_right = 100.0
-offset_bottom = 8.0
-color = Color(0, 0, 0, 1)
-
-[node name="BottomBar" type="ColorRect" parent="CinematicBars" unique_id=743206099]
-visible = false
-anchors_preset = 2
-anchor_top = 1.0
-anchor_bottom = 1.0
-offset_top = -8.0
-offset_right = 100.0
-grow_vertical = 0
-color = Color(0, 0, 0, 1)
+[node name="CinematicBars" parent="." unique_id=1430905773 instance=ExtResource("3_h2idm")]
 
 [editable path="DialogueBox"]

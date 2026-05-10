@@ -9,6 +9,7 @@
 [ext_resource type="PackedScene" uid="uid://dhyhu48xa0kyq" path="res://scenes/ui/flickering_texture_rect.tscn" id="7_jcn1r"]
 [ext_resource type="Texture2D" uid="uid://bdhf7elov1a72" path="res://assets/art/ui/go-go-go.png" id="8_uegxj"]
 [ext_resource type="PackedScene" uid="uid://c13i3voqsk3rd" path="res://scenes/ui/stage_transition.tscn" id="9_uegxj"]
+[ext_resource type="PackedScene" uid="uid://x7sp15pfvksa" path="res://scenes/ui/cinematic_bars.tscn" id="10_y220t"]
 
 [node name="UI" type="CanvasLayer" unique_id=1394759295]
 script = ExtResource("1_g5kmx")
@@ -106,5 +107,7 @@ total_flickers = 3
 
 [node name="StageTransition" parent="UIContainer" unique_id=1880583930 instance=ExtResource("9_uegxj")]
 layout_mode = 1
+
+[node name="CinematicBars" parent="UIContainer" unique_id=1430905773 instance=ExtResource("10_y220t")]
 
 [editable path="UIContainer/EnemyHealthBar"]

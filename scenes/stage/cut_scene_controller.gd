@@ -1,12 +1,10 @@
 class_name CutSceneController
 extends Node
 
-const BAR_TWEEN_DURATION := 0.3
 const CAMERA_TWEEN_DURATION := 0.5
 
 @onready var dialogue_box: DialogueBox = $DialogueBox
-@onready var top_bar: ColorRect = $CinematicBars/TopBar
-@onready var bottom_bar: ColorRect = $CinematicBars/BottomBar
+@onready var cinematic_bars: CinematicBars = $CinematicBars
 
 var player: Player
 var boss: IgorBoss
@@ -41,15 +39,8 @@ func lock_player() -> void:
 	player.set_physics_process(false)
 	
 func cinematic_start() -> void:
-	top_bar.visible = true
-	bottom_bar.visible = true
 	EntityManager.cutscene_started.emit()
-	var bar_height := top_bar.size.y
-	var viewport_height := get_viewport().get_visible_rect().size.y
-	var tween = create_tween().set_parallel()
-	tween.tween_property(top_bar, "position:y", 0.0, BAR_TWEEN_DURATION).from(-bar_height)
-	tween.tween_property(bottom_bar, "position:y", viewport_height - bar_height, BAR_TWEEN_DURATION).from(viewport_height)
-	await tween.finished
+	await cinematic_bars.animate_in()
 
 func boss_entry() -> void:
 	boss.projectile_aim.enabled = false
@@ -65,18 +56,9 @@ func dialogue() -> void:
 	dialogue_box.start_dialogue()
 	await EntityManager.dialogue_finished
 
-func finish() -> void:	
-	var bar_height := top_bar.size.y
-	var viewport_height := get_viewport().get_visible_rect().size.y
-	var tween = create_tween().set_parallel()
-	tween.tween_property(top_bar, "position:y", -bar_height, BAR_TWEEN_DURATION)
-	tween.tween_property(bottom_bar, "position:y", viewport_height, BAR_TWEEN_DURATION)
-	tween.tween_property(camera, "position:x", player.position.x, CAMERA_TWEEN_DURATION)
-	await tween.finished
-	
+func finish() -> void:
+	await cinematic_bars.animate_out()	
 	EntityManager.cutscene_finished.emit()
-	top_bar.visible = false
-	bottom_bar.visible = false
 	player.set_process(true)
 	player.set_physics_process(true)
 	boss.set_process(true)

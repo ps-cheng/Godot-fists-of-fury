@@ -1,0 +1,22 @@
+[gd_scene format=3 uid="uid://x7sp15pfvksa"]
+
+[ext_resource type="Script" uid="uid://dke4jdun03tri" path="res://scenes/ui/cinematic_bars.gd" id="1_xprgr"]
+
+[node name="CinematicBars" type="CanvasLayer" unique_id=1430905773]
+script = ExtResource("1_xprgr")
+
+[node name="TopBar" type="ColorRect" parent="." unique_id=1422785881]
+visible = false
+offset_right = 100.0
+offset_bottom = 8.0
+color = Color(0, 0, 0, 1)
+
+[node name="BottomBar" type="ColorRect" parent="." unique_id=988120539]
+visible = false
+anchors_preset = 2
+anchor_top = 1.0
+anchor_bottom = 1.0
+offset_top = -8.0
+offset_right = 100.0
+grow_vertical = 0
+color = Color(0, 0, 0, 1)
