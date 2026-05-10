@@ -8,6 +8,7 @@ const REVIVE_HEIGHT := 80
 @onready var enemy_slots: Array = $EnemySlots.get_children()
 
 var time_since_last_successful_attack := Time.get_ticks_msec()
+var is_exiting := false
 
 func _ready() -> void:
 	super._ready()
@@ -25,10 +26,12 @@ func process_time_between_combos() -> void:
 func on_player_revive() -> void:
 	current_health = max_health
 	state = State.JUMP
-	height = REVIVE_HEIGHT
-	
+	height = REVIVE_HEIGHT	
 
 func handle_input() -> void:
+	if is_exiting:
+		velocity = Vector2(speed, 0)
+		return
 	if can_move():
 		var direction := Input.get_vector("ui_left", "ui_right", "ui_up", "ui_down")
 		velocity = direction * speed
@@ -89,3 +92,6 @@ func free_slot(enemy: BasicEnemy) -> void:
 	)
 	if target_slots.size() == 1:
 		target_slots[0].free_up()
+		
+func exit_walk() -> void:
+	is_exiting = true

@@ -10,17 +10,20 @@ const STAGE_PREFABS := [
 @onready var stage_container: Node2D = $StageContainer
 @onready var actors_container: Node2D = $ActorsContainer
 @onready var stage_transition: StageTransition = $UI/UIContainer/StageTransition
+@onready var right_wall: AnimatableBody2D = $Camera/InvisibleWalls/RightWall
 
 var camera_initial_position := Vector2.ZERO
 var current_stage_index := -1
 var is_camera_locked := false
 var is_stage_ready_for_loading := false
+var is_player_exiting := false
 var player : Player = null
 
 func _ready() -> void:
 	camera_initial_position = camera.position
 	StageManager.checkpoint_start.connect(on_checkpoint_start.bind())
 	StageManager.checkpoint_complete.connect(on_checkpoint_complete.bind())
+	StageManager.stage_complete.connect(on_stage_complete.bind())
 	StageManager.stage_interim.connect(load_next_stage.bind())
 	load_next_stage()
 
@@ -39,6 +42,11 @@ func _process(_delta: float) -> void:
 		
 	if player != null and not is_camera_locked and player.position.x > camera.position.x:
 		camera.position.x = player.position.x
+		
+	if is_player_exiting and player != null:
+		if player.position.x > camera.position.x + get_viewport_rect().size.x/2 + 10:
+			is_player_exiting = false
+			StageManager.stage_exit_complete.emit()
 
 func load_next_stage() -> void:
 	current_stage_index += 1
@@ -56,3 +64,10 @@ func on_checkpoint_start() -> void:
 	
 func on_checkpoint_complete(_checkpoint: Checkpoint) -> void:
 	is_camera_locked = false
+	
+func on_stage_complete() -> void:
+	is_camera_locked = true
+	is_player_exiting = true
+	if player != null:
+		player.add_collision_exception_with(right_wall)
+		player.exit_walk()

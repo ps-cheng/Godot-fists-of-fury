@@ -5,7 +5,11 @@
       "Bash(Select-Object FullName)",
       "Bash(xargs grep -l \"game_over_screen\\\\|GameOverScreen\")",
       "Bash(xargs grep -l \"reload_current_scene\\\\|change_scene\\\\|get_tree\\\\|restart\")",
-      "Bash(xargs grep -l \"_input\\\\|Input\\\\|pressed\\\\|on_game_over\")"
+      "Bash(xargs grep -l \"_input\\\\|Input\\\\|pressed\\\\|on_game_over\")",
+      "Bash(Get-ChildItem -Path \"D:\\\\Godot\\\\Godot-fists-of-fury\" -Recurse -Filter \"*.gd\")",
+      "Bash(Select-Object -ExpandProperty FullName)",
+      "Bash(xargs grep -l \"cut_scene\\\\|cutscene\")",
+      "Bash(Get-ChildItem -Recurse -Filter \"*.tscn\" -ErrorAction SilentlyContinue)"
     ]
   }
 }
