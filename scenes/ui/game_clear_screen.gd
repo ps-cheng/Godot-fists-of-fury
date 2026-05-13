@@ -5,6 +5,7 @@ extends Control
 @onready var timer: Timer = $Timer
 @onready var restart_button: Button = $Background/MarginContainer/VBoxContainer/Buttons/RestartButton
 @onready var end_button: Button = $Background/MarginContainer/VBoxContainer/Buttons/EndButton
+@onready var title_label: Label = $Background/MarginContainer/VBoxContainer/Label
 
 var total_score := 0
 

@@ -12,6 +12,7 @@
 [ext_resource type="PackedScene" uid="uid://bsw265i5mglvj" path="res://scenes/props/barrel.tscn" id="7_2j5k0"]
 [ext_resource type="PackedScene" uid="uid://bw5ra148fij0w" path="res://scenes/props/door.tscn" id="8_w6ome"]
 [ext_resource type="PackedScene" uid="uid://gwyph4o5xxtl" path="res://scenes/characters/igor_boss.tscn" id="10_5hqmy"]
+[ext_resource type="PackedScene" uid="uid://dm2jf15umswav" path="res://scenes/stage/cut_scene_controller.tscn" id="10_gt854"]
 [ext_resource type="Texture2D" uid="uid://b34fwr27qwf63" path="res://assets/art/backgrounds/window.png" id="13_rdlvb"]
 [ext_resource type="Texture2D" uid="uid://bu5fyv58et4ia" path="res://assets/art/backgrounds/rails.png" id="14_5dxgg"]
 
@@ -36,6 +37,12 @@ z_as_relative = false
 position = Vector2(452, 0)
 texture = ExtResource("5_w6ome")
 centered = false
+
+[node name="CollisionShape2D" parent="WorldColliders/StaticBody2D" parent_id_path=PackedInt32Array(538458468) index="0" unique_id=1367001233]
+position = Vector2(225.5, 0)
+
+[node name="CollisionShape2D" parent="WorldColliders/StaticBody2D2" parent_id_path=PackedInt32Array(1741960919) index="0" unique_id=666504277]
+position = Vector2(225, 0)
 
 [node name="Checkpoint" parent="Checkpoints" parent_id_path=PackedInt32Array(130865797) index="0" unique_id=155548607 instance=ExtResource("3_63hrp")]
 position = Vector2(100, 0)
@@ -124,9 +131,16 @@ position = Vector2(41, -7)
 [node name="BasicEnemy7" parent="Checkpoints/Checkpoint2/Enemies" parent_id_path=PackedInt32Array(328018651, 1401944699) index="13" unique_id=1089196847 instance=ExtResource("5_j5gp6")]
 position = Vector2(112, 64)
 
-[node name="Checkpoint3" parent="Checkpoints" parent_id_path=PackedInt32Array(130865797) index="2" unique_id=1776037780 instance=ExtResource("3_63hrp")]
-position = Vector2(330, 0)
+[node name="Checkpoint3" parent="Checkpoints" parent_id_path=PackedInt32Array(130865797) index="2" unique_id=1776037780 node_paths=PackedStringArray("cutscene_controller") instance=ExtResource("3_63hrp")]
+position = Vector2(343, 0)
 nb_simultaneous_enemies = 3
+cutscene_controller = NodePath("CutSceneController")
+
+[node name="CutSceneController" parent="Checkpoints/Checkpoint3" index="0" unique_id=1168341462 instance=ExtResource("10_gt854")]
+
+[node name="DialogueBox" parent="Checkpoints/Checkpoint3/CutSceneController" index="0" unique_id=1792231143]
+visible = false
+lines = Array[String](["Get lost.", "One more step..", "and I'll break your bone "])
 
 [node name="IgorBoss" parent="Checkpoints/Checkpoint3/Enemies" parent_id_path=PackedInt32Array(1776037780, 1401944699) index="0" unique_id=1988070691 instance=ExtResource("10_5hqmy")]
 position = Vector2(109, 62)
@@ -178,8 +192,10 @@ texture = ExtResource("14_5dxgg")
 centered = false
 
 [node name="PlayerSpawnLocation" parent="." index="6" unique_id=1028698233]
-position = Vector2(43, 54)
+position = Vector2(354, 54)
 
 [editable path="Checkpoints/Checkpoint"]
 [editable path="Checkpoints/Checkpoint2"]
 [editable path="Checkpoints/Checkpoint3"]
+[editable path="Checkpoints/Checkpoint3/CutSceneController"]
+[editable path="Checkpoints/Checkpoint3/CutSceneController/DialogueBox"]

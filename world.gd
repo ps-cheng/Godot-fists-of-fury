@@ -2,7 +2,7 @@ extends Node2D
 
 const PLAYER_PREFAB := preload("res://scenes/characters/player.tscn")
 const STAGE_PREFABS := [
-	#preload("res://scenes/stage/stage_01_streets.tscn"),
+	preload("res://scenes/stage/stage_01_streets.tscn"),
 	preload("res://scenes/stage/stage_02_bar.tscn")
 ]
 
