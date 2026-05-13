@@ -55,6 +55,7 @@ func load_next_stage() -> void:
 			existing_stage.queue_free()
 		for actor in actors_container.get_children():
 			actor.queue_free()
+		is_camera_locked = false
 		is_stage_ready_for_loading = true
 	else:
 		StageManager.game_clear.emit()

@@ -13,7 +13,6 @@ var is_activated := false
 
 func _ready() -> void:
 	player_detection_area.body_entered.connect(on_player_enter.bind())
-	EntityManager.death_enemy.connect(on_enemy_death.bind())
 	if cutscene_controller != null:
 		EntityManager.boss_spawned.connect(on_boss_spawned.bind())
 		
@@ -42,6 +41,7 @@ func on_player_enter(player: Player) -> void:
 		StageManager.checkpoint_start.emit()
 		active_enemy_counter = 0
 		is_activated = true
+		EntityManager.death_enemy.connect(on_enemy_death.bind())
 		if cutscene_controller != null:
 			cutscene_controller.set_player(player)
 		

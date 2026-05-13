@@ -36,6 +36,7 @@ func _init() -> void:
 	StageManager.checkpoint_complete.connect(on_checkpoint_complete.bind())
 	StageManager.game_clear.connect(on_game_clear.bind())
 	StageManager.stage_complete.connect(on_stage_complete.bind())
+	StageManager.stage_interim.connect(on_load_next_stage.bind())
 	EntityManager.cutscene_started.connect(on_cutscene_started.bind())
 	EntityManager.cutscene_finished.connect(on_cutscene_finished.bind())
 	
@@ -105,3 +106,7 @@ func on_game_clear() -> void:
 func on_stage_complete() -> void:	
 	ui_container.visible = false
 	cinematic_bars.animate_in()
+	
+func on_load_next_stage() -> void:
+	ui_container.visible = true
+	cinematic_bars.animate_out()
