@@ -140,7 +140,7 @@ cutscene_controller = NodePath("CutSceneController")
 
 [node name="DialogueBox" parent="Checkpoints/Checkpoint3/CutSceneController" index="0" unique_id=1792231143]
 visible = false
-lines = Array[String](["Get lost.", "One more step..", "and I'll break your bone "])
+lines = Array[String](["Get lost.", "One more step...", "and I'll break your bones."])
 
 [node name="IgorBoss" parent="Checkpoints/Checkpoint3/Enemies" parent_id_path=PackedInt32Array(1776037780, 1401944699) index="0" unique_id=1988070691 instance=ExtResource("10_5hqmy")]
 position = Vector2(109, 62)
